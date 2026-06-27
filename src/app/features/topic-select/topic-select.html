@@ -1,1 +1,10 @@
-<p>topic-select works!</p>
+<h1>Themenbereich wählen</h1>
+<ul>
+  @for (topic of store.topics(); track topic.id) {
+    <li>
+      <a [routerLink]="['/topics', topic.id, 'catalogs']">
+        {{ topic.name }}
+      </a>
+    </li>
+    }
+</ul>

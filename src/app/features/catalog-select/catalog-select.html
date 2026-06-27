@@ -1,1 +1,7 @@
-<p>catalog-select works!</p>
+<h1>Fragenkatalog wählen</h1>
+
+@for (cat of store.catalogs(); track cat.id) {
+  <a [routerLink]="['/catalogs', cat.id]">
+    {{ cat.name }} ({{ cat.questionCount }} Fragen)
+  </a>
+}
