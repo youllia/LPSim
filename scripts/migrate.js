@@ -72,4 +72,4 @@ const db = {
 };
 
 fs.writeFileSync('db.json', JSON.stringify(db, null, 2));
-console.log('✅ db.json wurde erstellt.');
+console.log('db.json wurde erstellt.');

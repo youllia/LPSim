@@ -10,11 +10,11 @@ import { CatalogStore } from '../../shared/services/catalog-store';
 })
 
 export class CatalogSelect implements OnInit {
-  private route = inject(ActivatedRoute);
+  #route = inject(ActivatedRoute);
   store = inject(CatalogStore);
 
   ngOnInit() {
-    const topicId = Number(this.route.snapshot.paramMap.get('topicId'));
+    const topicId = Number(this.#route.snapshot.paramMap.get('topicId'));
     this.store.loadByTopic(topicId);
   }
 }
