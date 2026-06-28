@@ -13,19 +13,22 @@ import { Question } from '../../shared/models/question';
 export class QuestionDetail implements OnInit {
   #route = inject(ActivatedRoute);
   store = inject(QuestionStore);
-  #id = 0;
+  #id = signal(0);
+
   protected question = computed(() => this.store.questions()
-    .find(q => q.id === this.#id))
+    .find(q => q.id === this.#id()));
 
-  ngOnInit() {
-    this.#id = Number(this.#route.snapshot.paramMap.get('questionId'));
-    const catId = Number(this.#route.snapshot.paramMap.get('catalogId'))
-
-    if (this.store.questions().length === 0) 
-      { this.store.loadByCatalog(catId); }
-  }
-
-
+ngOnInit() {
+  this.#route.paramMap.subscribe({
+    next: params => {
+      this.#id.set(Number(params.get('questionId')));
+      const catId = Number(params.get('catalogId'));   // ← params, не snapshot!
+      if (this.store.questions().length === 0) {
+        this.store.loadByCatalog(catId);
+      }
+    }     
+  });     
+} 
 
   selectedId = signal<number | null>(null);
   checked = signal(false);
@@ -38,11 +41,11 @@ export class QuestionDetail implements OnInit {
 
 
   protected prevId = computed(() => { const qArr =  this.store.questions();
-    const i = qArr.findIndex(q =>q.id === this.#id);
+    const i = qArr.findIndex(q =>q.id === this.#id());
     return qArr[i - 1]?.id;
   });
  protected nextId = computed(() => { const qArr =  this.store.questions();
-    const i = qArr.findIndex(q =>q.id === this.#id);
+    const i = qArr.findIndex(q =>q.id === this.#id());
     return qArr[i + 1]?.id;
   });
 
