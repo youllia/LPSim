@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { QuestionStore } from '../../shared/services/question-store';
 import { Question } from '../../shared/models/question';
@@ -9,19 +9,41 @@ import { Question } from '../../shared/models/question';
   templateUrl: './question-detail.html',
   styleUrl: './question-detail.scss',
 })
+
 export class QuestionDetail implements OnInit {
   #route = inject(ActivatedRoute);
   store = inject(QuestionStore);
-
-  protected question = signal<Question | undefined>(undefined);
+  #id = 0;
+  protected question = computed(() => this.store.questions()
+    .find(q => q.id === this.#id))
 
   ngOnInit() {
-    const questionId = this.#route.snapshot.paramMap.get('questionId');
-    const id = Number(questionId);
-    
+    this.#id = Number(this.#route.snapshot.paramMap.get('questionId'));
+    const catId = Number(this.#route.snapshot.paramMap.get('catalogId'))
 
-    if (!Number.isNaN(id)) {
-      this.question.set(this.store.getSingle(id));
-    }
+    if (this.store.questions().length === 0) 
+      { this.store.loadByCatalog(catId); }
   }
+
+
+
+  selectedId = signal<number | null>(null);
+  checked = signal(false);
+  
+  isCorrect =  computed(() => this.question()?.answers
+  .find(a => a.id === this.selectedId())?.isCorrect ?? false);
+  
+  correctAnswers =  computed(() => this.question()?.answers
+  .filter(a => a.isCorrect));
+
+
+  protected prevId = computed(() => { const qArr =  this.store.questions();
+    const i = qArr.findIndex(q =>q.id === this.#id);
+    return qArr[i - 1]?.id;
+  });
+ protected nextId = computed(() => { const qArr =  this.store.questions();
+    const i = qArr.findIndex(q =>q.id === this.#id);
+    return qArr[i + 1]?.id;
+  });
+
 }

@@ -7,6 +7,6 @@ export interface Question {
     catalogId: number;
     type: QuestionType;
     questionText: string;
-    answer: Answer[];
+    answers: Answer[];
     hint: string;
 }

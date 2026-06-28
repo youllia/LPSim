@@ -1,7 +1,61 @@
-<h1>question-detail works!</h1>
-<p>
+<h3>{{question()?.hint}} | {{question()?.type}}</h3>
+<h2>
     {{question()?.questionText}}
-</p>
+</h2>
 <p>
-    
+   
 </p>
+
+@switch (question()?.type) {
+  @case ('mc') {
+    <!-- Multiple Choice -->
+    @for (answer of question()!.answers; track answer.id) {
+      <ul>
+        <li>
+            <label>
+                <input type="checkbox" [value]="answer.id" />
+                {{ answer.answerText }}
+            </label>
+         </li>
+    </ul>   
+    }
+  }
+  @case ('sc') {
+    <!-- Single Choice -->
+    @for (answer of question()!.answers; track answer.id) {
+      <ul>
+        <li>
+            <label>
+                <input type="radio" name="answer" [value]="answer.id" />
+                {{ answer.answerText }}
+            </label>
+        </li>
+    </ul>
+    }
+  }
+  @case ('fi') {
+    <!-- Fill-In -->
+    <input type="text" placeholder="Antwort eingeben..." />
+  }
+  @default {
+    <p>Unbekannter Fragetyp.</p>
+  }
+}
+<br/>
+<button (click)="checked.set(true)">Antwort prüfen</button>
+
+@if (checked()) {
+  <p>Resultat: {{ isCorrect() ? 'Richtig' : 'Falsch' }}</p>
+  <p>Korrekt:</p>
+  <ul>
+    @for (a of correctAnswers(); track a.id) {
+      <li>{{ a.answerText }}</li>
+    }
+  </ul>
+}
+
+<nav class="bottom-nav">
+    <a [routerLink]="['..', prevId()]"> ← Vorherige</a>
+    <a routerLink=".."> ← Fragenliste</a>
+    <a [routerLink]="['..', nextId()]">Nächste → </a>
+</nav>
