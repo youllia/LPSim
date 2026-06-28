@@ -26,8 +26,12 @@
       <ul>
         <li>
             <label>
-                <input type="radio" name="answer" [value]="answer.id" />
-                {{ answer.answerText }}
+                <input type="radio" 
+                    name="answer" 
+                    [value]="answer.id" 
+                    [checked]="selectedId() === answer.id"
+                    (change)="selectedId.set(answer.id)"/>
+                    {{ answer.answerText }}
             </label>
         </li>
     </ul>

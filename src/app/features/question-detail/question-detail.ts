@@ -22,7 +22,11 @@ ngOnInit() {
   this.#route.paramMap.subscribe({
     next: params => {
       this.#id.set(Number(params.get('questionId')));
-      const catId = Number(params.get('catalogId'));   // ← params, не snapshot!
+      
+      this.selectedId.set(null);
+      this.checked.set(false);
+
+      const catId = Number(params.get('catalogId'));
       if (this.store.questions().length === 0) {
         this.store.loadByCatalog(catId);
       }
