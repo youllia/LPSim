@@ -43,7 +43,7 @@ ngOnInit() {
   correctAnswers =  computed(() => this.question()?.answers
   .filter(a => a.isCorrect));
 
-
+  // Navigation zwischen Fragen
   protected prevId = computed(() => { const qArr =  this.store.questions();
     const i = qArr.findIndex(q =>q.id === this.#id());
     return qArr[i - 1]?.id;
