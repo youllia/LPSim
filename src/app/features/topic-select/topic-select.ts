@@ -1,10 +1,10 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 import { TopicStore } from '../../shared/services/topic-store';
 
 @Component({
   selector: 'app-topic-select',
-  imports: [RouterLink],
+  imports: [RouterLink, RouterLinkActive],
   templateUrl: './topic-select.html',
   styleUrl: './topic-select.scss',
 })
