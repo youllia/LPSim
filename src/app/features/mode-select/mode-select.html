@@ -1,3 +1,13 @@
-<h3>mode-select works!</h3>
+<!-- <p> Aktuel: {{ state.mode() }} </p> -->
 
-<button (click)="state.mode.set('lernen')">Lernmodus</button>
+<mat-button-toggle-group [value]="state.mode()" 
+(change)="state.mode.set($event.value)">
+<mat-button-toggle value="lernen">
+  Lernmodus
+</mat-button-toggle>
+  <mat-button-toggle value="pruefung">
+    Prüfungssimulation
+  </mat-button-toggle>
+</mat-button-toggle-group>
+
+

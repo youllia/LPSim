@@ -1,13 +1,22 @@
-<nav>
-      <ul>
-        <li>
-          <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" ariaCurrentWhenActive="page">Home</a>
-      </li>
-      <li>
-        <a routerLink="/topics" routerLinkActive="active" ariaCurrentWhenActive="page">Kataloge</a>
-      </li>
-      <li>
-        <a routerLink="/mode" routerLinkActive="active" ariaCurrentWhenActive="page">LernModus</a>
-      </li>
-    </ul>
-  </nav>
+<mat-toolbar>
+
+  <a mat-button
+     routerLink="/"
+     routerLinkActive="active"
+     [routerLinkActiveOptions]="{exact: true}"
+     ariaCurrentWhenActive="page">Home
+  </a>
+
+  <a mat-button
+     routerLink="/topics"
+     routerLinkActive="active"
+     ariaCurrentWhenActive="page">Kataloge
+  </a>
+
+  <span class="spacer"></span>
+  
+  <app-mode-select />
+  
+</mat-toolbar>
+
+
