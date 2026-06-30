@@ -7,7 +7,7 @@ import { API_URL } from '../api.config';
 export class CatalogStore {
   #http = inject(HttpClient);
   readonly catalogs = signal<Catalog[]>([]);
-          
+
   loadByTopic(topicId: number) {
     this.#http.get<Catalog[]>(`${API_URL}/catalogs?topicId=${topicId}`)
       .subscribe(data => this.catalogs.set(data));

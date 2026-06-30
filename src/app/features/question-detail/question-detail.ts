@@ -5,10 +5,14 @@ import { Question } from '../../shared/models/question';
 import { ModeState } from '../../shared/services/mode-state';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatRadioButton, MatRadioGroup } from '@angular/material/radio';
+import { MatButton, MatButtonModule } from '@angular/material/button';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatTabGroup } from "@angular/material/tabs";
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
 
 @Component({
   selector: 'app-question-detail',
-  imports: [RouterLink, MatCheckboxModule, MatRadioButton, MatRadioGroup],
+  imports: [RouterLink, MatCheckboxModule, MatRadioButton, MatRadioGroup, MatButtonModule, MatButtonToggleModule],
   templateUrl: './question-detail.html',
   styleUrl: './question-detail.scss',
 })
@@ -20,7 +24,7 @@ export class QuestionDetail implements OnInit {
 
   protected mode = inject(ModeState);
   //protected unlock = signal(false);
-  
+
   protected question = computed(() => this.store.questions()
     .find(q => q.id === this.#id()));
 
@@ -33,12 +37,12 @@ export class QuestionDetail implements OnInit {
   }
 
 
-    
+
   ngOnInit() {
-    this.#route.paramMap.subscribe({ 
+    this.#route.paramMap.subscribe({
       next: params => {
         this.#id.set(Number(params.get('questionId')));
-        
+
         this.selectedId.set(null);
         this.checked.set(false);
         //this.unlock.set(false);
@@ -48,39 +52,41 @@ export class QuestionDetail implements OnInit {
         if (this.store.questions().length === 0) {
           this.store.loadByCatalog(catId);
         }
-      }     
-    });     
-  } 
+      }
+    });
+  }
 
 
   // Antwortcheck
   selectedId = signal<number | null>(null);
   checked = signal(false);
-  
-  
-  isCorrect =  computed(() => this.question()?.answers
-  .find(a => a.id === this.selectedId())?.isCorrect ?? false);
-  
-  correctAnswers =  computed(() => this.question()?.answers
-  .filter(a => a.isCorrect));
+
+
+  isCorrect = computed(() => this.question()?.answers
+    .find(a => a.id === this.selectedId())?.isCorrect ?? false);
+
+  correctAnswers = computed(() => this.question()?.answers
+    .filter(a => a.isCorrect));
 
 
   // Navigation zwischen Fragen
-  protected prevId = computed(() => { const qArr =  this.store.questions();
-    const i = qArr.findIndex(q =>q.id === this.#id());
-    return qArr[i - 1]?.id;
+  protected prevId = computed(() => {
+    const qArr = this.store.questions();
+    const i = qArr.findIndex(q => q.id === this.#id());
+    return (i > 0) ? qArr[i - 1]?.id : undefined
   });
-
-  protected nextId = computed(() => { const qArr =  this.store.questions();
-    const i = qArr.findIndex(q =>q.id === this.#id());
-    return qArr[i + 1]?.id;
-  });
-
   
+  protected nextId = computed(() => {
+    const qArr = this.store.questions();
+    const i = qArr.findIndex(q => q.id === this.#id());
+    return (i >= 0 && i < qArr.length - 1 ) ? qArr[i + 1]?.id : undefined;
+  });
+
+
   // 
-  
 
-  
-  
+
+
+
 
 }

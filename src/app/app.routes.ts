@@ -12,6 +12,6 @@ export const routes: Routes = [
   { path: 'topics/:topicId/catalogs', component: CatalogSelect },
   { path: 'catalogs/:catalogId/questions', component: QuestionSelect },
   { path: 'catalogs/:catalogId/questions/:questionId', component: QuestionDetail },
-  { path: 'mode', component: ModeSelect}
+  { path: 'mode', component: ModeSelect }
 ];
 

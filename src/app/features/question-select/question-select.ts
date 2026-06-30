@@ -12,10 +12,10 @@ import { CatalogSelect } from '../catalog-select/catalog-select';
 export class QuestionSelect implements OnInit {
   #route = inject(ActivatedRoute);
   protected store = inject(QuestionStore);
-  protected catalogId = 0; 
+  protected catalogId = 0;
 
   ngOnInit() {
     this.catalogId = Number(this.#route.snapshot.paramMap.get('catalogId'));
-      this.store.loadByCatalog(this.catalogId);
+    this.store.loadByCatalog(this.catalogId);
   }
 }

@@ -1,6 +1,6 @@
 import { Answer } from './answer';
 
-export type QuestionType='mc' | 'sc' | 'fi';
+export type QuestionType = 'mc' | 'sc' | 'fi';
 
 export interface Question {
     id: number;

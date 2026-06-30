@@ -1,10 +1,10 @@
 <h2>Themenbereich wählen</h2>
 <ul>
   @for (topic of store.topics(); track topic.id) {
-    <li>
-      <a [routerLink]="['/topics', topic.id, 'catalogs']", routerLinkActive="active-link">
-        {{ topic.name }}
-      </a>
-    </li>
-    }
+  <li>
+    <a [routerLink]="['/topics', topic.id, 'catalogs']" , routerLinkActive="active-link">
+      {{ topic.name }}
+    </a>
+  </li>
+  }
 </ul>

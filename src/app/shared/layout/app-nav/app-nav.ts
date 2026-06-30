@@ -7,8 +7,8 @@ import { MatTabNavPanel } from '@angular/material/tabs';
 
 @Component({
   selector: 'app-nav',
-  imports: [RouterLink, RouterLinkActive, MatToolbarModule, MatButtonModule, ModeSelect, ModeSelect],
+  imports: [RouterLink, RouterLinkActive, MatToolbarModule, MatButtonModule, ModeSelect],
   templateUrl: './app-nav.html',
   styleUrl: './app-nav.scss',
 })
-export class AppNav {}
+export class AppNav { }

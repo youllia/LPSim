@@ -7,9 +7,9 @@ import { API_URL } from '../api.config';
 export class TopicStore {
     #http = inject(HttpClient);
     readonly topics = signal<Topic[]>([]);
-   
+
     load() {
-    this.#http.get<Topic[]>(`${API_URL}/topics`)
-         .subscribe(data => this.topics.set(data));
+        this.#http.get<Topic[]>(`${API_URL}/topics`)
+            .subscribe(data => this.topics.set(data));
     }
 }

@@ -9,9 +9,9 @@ import { TopicStore } from '../../shared/services/topic-store';
   styleUrl: './topic-select.scss',
 })
 export class TopicSelect implements OnInit {
-    store = inject(TopicStore);
+  store = inject(TopicStore);
 
-    ngOnInit() {
-      this.store.load();
-    }
+  ngOnInit() {
+    this.store.load();
+  }
 }

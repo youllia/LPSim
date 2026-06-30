@@ -6,4 +6,4 @@ import { Component } from '@angular/core';
   templateUrl: './exam-config.html',
   styleUrl: './exam-config.scss',
 })
-export class ExamConfig {}
+export class ExamConfig { }

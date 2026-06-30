@@ -6,4 +6,4 @@ import { Component } from '@angular/core';
   templateUrl: './app-header.html',
   styleUrl: './app-header.scss',
 })
-export class AppHeader {}
+export class AppHeader { }
