@@ -7,12 +7,16 @@
 
 html {
   height: 100%;
-  @include mat.theme((color: (primary: mat.$azure-palette,
+  @include mat.theme(
+    (
+      color: (
+        primary: mat.$azure-palette,
         tertiary: mat.$blue-palette,
       ),
-      typography: Arial, 
+      typography: Roboto,
       density: 0,
-    ));
+    )
+  );
 }
 
 body {
@@ -32,5 +36,24 @@ body {
   margin: 0;
   height: 100%;
 }
-
 /* You can add global styles to this file, and also import other style files */
+
+
+
+
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, Helvetica, sans-serif, "Helvetica Neue", sans-serif;
+  background: #fafafa;
+  color: rgba(0, 0, 0, 0.87);
+  min-height: 100vh;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+h1, h2, h3, h4 {
+  margin-top: 0;
+}

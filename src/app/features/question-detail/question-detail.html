@@ -7,23 +7,29 @@
 
   <!-- Multiple Choice -->
     @case ('mc') {
-      @for (answer of q!.answers; track answer.id) {
-      <mat-checkbox [checked]="selectedIds().includes(answer.id)" (change)="toggleSelected(answer.id, $event.checked)">
-        {{ answer.answerText }}
-      </mat-checkbox>
+      @for (answer of q.answers; track answer.id) {
+        <mat-checkbox 
+          [checked]="selectedAnswerIds().includes(answer.id)" 
+          (change)="toggleSelected(answer.id, $event.checked)"
+          [class.correct-answer]="checked() && answer.isCorrect"
+          [class.wrong-selected]="checked() && !answer.isCorrect && selectedAnswerIds().includes(answer.id)">
+          {{ answer.answerText }}
+        </mat-checkbox>
       }
     }
 
   <!-- Single Choice -->
     @case ('sc') {
-    <mat-radio-group [value]="selectedId()" (change)="selectedId.set($event.value)">
-      @for (answer of q.answers; track answer.id) {
-      <mat-radio-button [value]="answer.id">
-        {{ answer.answerText }}
-      </mat-radio-button>
-      }
-    </mat-radio-group>
-    <p>Debug: {{ selectedId() }}</p>
+      <mat-radio-group [value]="selectedAnswerId()" (change)="selectedAnswerId.set($event.value)">
+        @for (answer of q.answers; track answer.id) {
+          <mat-radio-button 
+            [value]="answer.id"
+            [class.correct-answer]="checked() && answer.isCorrect"
+            [class.wrong-selected]="checked() && !answer.isCorrect && selectedAnswerId() === answer.id">
+            {{ answer.answerText }}
+          </mat-radio-button>
+        }
+      </mat-radio-group>
     }
 
   <!-- Fill-In -->
@@ -35,30 +41,30 @@
           (input)="userInput.set($any($event.target).value)"/>
       </mat-form-field>
     }
-
-<!--     @default {
-      <p>
-        Die Frage wurde nicht gefunden.
-      </p>   
-      } -->
   }
 
   <br />
 
-  <!-- && selectedId() !== null -->
     @if (mode.mode() === 'lernen') {
       <button matButton="filled" (click)="checked.set(true)">Antwort prüfen</button>
 
       @if (checked()) {
-        <p>Resultat: {{ isCorrect() ? 'Richtig' : 'Falsch' }}</p>
-        <p>Korrekt:</p>
-        
-          @for (a of correctAnswers(); track a.id) {
-          <li>{{ a.answerText }}</li>
-          }
+        <div class="result">
+          <p class="verdict" 
+            [class.correct]="isCorrect()" 
+            [class.incorrect]="!isCorrect()">
+            {{ isCorrect() ? 'Richtig' : 'Falsch' }}
+          </p>
+          <p>Korrekte Antwort(en):</p>
+          <ul>
+            @for (a of correctAnswers(); track a.id) {
+              <li>{{ a.answerText }}</li>
+            }
+          </ul>
+        </div>
       }
     }
-}
+  }
 
 <!-- Navigation zwischen Fragen -->
 
