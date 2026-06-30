@@ -1,18 +1,24 @@
 import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { QuestionStore } from '../../shared/services/question-store';
-import { Question } from '../../shared/models/question';
 import { ModeState } from '../../shared/services/mode-state';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatRadioButton, MatRadioGroup } from '@angular/material/radio';
-import { MatButton, MatButtonModule } from '@angular/material/button';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatTabGroup } from "@angular/material/tabs";
+import { MatButtonModule } from '@angular/material/button';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 @Component({
   selector: 'app-question-detail',
-  imports: [RouterLink, MatCheckboxModule, MatRadioButton, MatRadioGroup, MatButtonModule, MatButtonToggleModule],
+  imports: [
+    RouterLink, 
+    MatCheckboxModule, 
+    MatRadioButton, 
+    MatRadioGroup, 
+    MatButtonModule, 
+    MatButtonToggleModule, 
+    MatFormFieldModule
+  ],
   templateUrl: './question-detail.html',
   styleUrl: './question-detail.scss',
 })
@@ -22,6 +28,7 @@ export class QuestionDetail implements OnInit {
   store = inject(QuestionStore);
   #id = signal(0);
 
+
   protected mode = inject(ModeState);
   //protected unlock = signal(false);
 
@@ -29,6 +36,7 @@ export class QuestionDetail implements OnInit {
     .find(q => q.id === this.#id()));
 
   protected selectedIds = signal<number[]>([]);
+  
   protected toggleSelected(id: number, checked: boolean) {
     const current = this.selectedIds();
     this.selectedIds.set(
@@ -36,6 +44,7 @@ export class QuestionDetail implements OnInit {
     );
   }
 
+  protected userInput = signal('');
 
 
   ngOnInit() {
@@ -47,6 +56,7 @@ export class QuestionDetail implements OnInit {
         this.checked.set(false);
         //this.unlock.set(false);
         this.selectedIds.set([]);
+        this.userInput.set('');
 
         const catId = Number(params.get('catalogId'));
         if (this.store.questions().length === 0) {
@@ -61,12 +71,19 @@ export class QuestionDetail implements OnInit {
   selectedId = signal<number | null>(null);
   checked = signal(false);
 
+  isCorrect = computed(() => {
+    const q = this.question();
+    if (!q) return false;
 
-  isCorrect = computed(() => this.question()?.answers
-    .find(a => a.id === this.selectedId())?.isCorrect ?? false);
+    const correctIds = q.answers.filter(a => a.isCorrect).map(a => a.id).sort();
+  });
+
+ /*  isCorrect = computed(() => this.question()?.answers
+    .find(a => a.id === this.selectedId())?.isCorrect ?? false); */
 
   correctAnswers = computed(() => this.question()?.answers
     .filter(a => a.isCorrect));
+
 
 
   // Navigation zwischen Fragen
