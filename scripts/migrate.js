@@ -64,11 +64,12 @@ console.log(`Themen:    ${topics.length}`);
 console.log(`Kataloge:  ${catalogs.length}`);
 console.log(`Fragen:    ${questions.length}`);
 
+
 //  5. db.json schreiben 
 const db = {
   topics: topics,
   catalogs: catalogs,
-  questions: questions
+  questions: questions,
 };
 
 fs.writeFileSync('db.json', JSON.stringify(db, null, 2));

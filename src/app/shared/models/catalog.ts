@@ -3,4 +3,5 @@ export interface Catalog {
     topicId: number;
     name: string;
     questionCount: number;
+    apiUrl?: string;
 }

@@ -1,4 +1,5 @@
 export interface Topic {
-    id: number;
-    name: string;
+    readonly id: number;
+    readonly name: string;
+    readonly apiUrl?: string;
 }

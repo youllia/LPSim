@@ -44,13 +44,17 @@ export class QuestionDetail implements OnInit {
   ngOnInit() {
     this.#route.paramMap.subscribe({
       next: params => {
+        const previousCatalogId = this.#route.snapshot.params['catalogId'];
+        const nextCatalogId = params.get('catalogId');
+        const previousQuestionId = this.#route.snapshot.params['questionId'];
+        const nextQuestionId = params.get('questionId');
+
+        if (previousCatalogId !== nextCatalogId || previousQuestionId !== nextQuestionId) {
+          this.resetAnswers();
+        }
+
         this.#id.set(Number(params.get('questionId')));
-        
-        this.selectedAnswerId.set(null);
-        this.selectedAnswerIds.set([]);
-        this.userInput.set('');
-        this.checked.set(false);
-        
+
         const catId = Number(params.get('catalogId'));
         if (this.store.questions().length === 0) {
           this.store.loadByCatalog(catId);
@@ -95,7 +99,13 @@ export class QuestionDetail implements OnInit {
   
   
     
-
+  // Zurücksetzen der Antworten
+  protected resetAnswers() {
+    this.selectedAnswerId.set(null);
+    this.selectedAnswerIds.set([]);
+    this.userInput.set('');
+    this.checked.set(false);
+  }
   protected toggleSelected(id: number, checked: boolean) {
     const current = this.selectedAnswerIds();
   
