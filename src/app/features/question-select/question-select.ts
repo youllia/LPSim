@@ -11,12 +11,12 @@ import { CatalogStore } from '../../shared/services/catalog-store';
   styleUrl: './question-select.scss',
 })
 export class QuestionSelect {
-  #route = inject(ActivatedRoute);
+/*   #route = inject(ActivatedRoute);
   store = inject(QuestionStore); 
   topicStore = inject(TopicStore);
-  catalogStore = inject(CatalogStore);
-  
-  // Signal to hold the current catalog ID
+  catalogStore = inject(CatalogStore); */
+}
+/*   // Signal to hold the current catalog ID
   #catalogId = signal(0);
 
   // Computed property to determine the API URL based on the current catalog and topic
@@ -34,11 +34,11 @@ export class QuestionSelect {
     if (this.topicStore.topics().length === 0) {
       this.topicStore.load();
     }
-    // Cold-load catalogs if the catalogId is not found in the current list
+    //
     const catId = this.#catalogId();
-    /* if (catId && !this.catalogStore.catalogs().find(c => c.id === catId)) {
+    if (catId && !this.catalogStore.catalogs().find(c => c.id === catId)) {
       this.catalogStore.loadOne(catId);
-    } */
+    }
     // Set the catalogId and apiUrl in the QuestionStore when they change
     fetch
         effect(() => {
@@ -48,7 +48,7 @@ export class QuestionSelect {
       }
     }
 
-
+ */
 
   /* ngOnInit() {
     this.catalogId = Number(this.#route.snapshot.paramMap.get('catalogId'));

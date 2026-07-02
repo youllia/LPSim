@@ -9,7 +9,7 @@ import { Anleitung } from './features/anleitung/anleitung';
 import { NotFound } from './features/not-found/not-found';
 
 export const routes: Routes = [
-  { path: '', component: Home },
+  { path: '', component: TopicSelect },
   { path: 'anleitung', component: Anleitung },
   { path: 'topics',  redirectTo: '', pathMatch: 'full' },
   { path: 'topics/:topicId/catalogs', component: CatalogSelect },
