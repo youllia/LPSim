@@ -25,7 +25,7 @@ import { MatInputModule } from '@angular/material/input';
   styleUrl: './question-detail.scss',
 })
 
-export class QuestionDetail implements OnInit {
+export class QuestionDetail {
   #route = inject(ActivatedRoute);
   store = inject(QuestionStore);
   protected mode = inject(ModeState);
@@ -99,9 +99,9 @@ export class QuestionDetail implements OnInit {
   
   
     
-  // Zurücksetzen der Antworten
+  
   protected resetAnswers() {
-    this.selectedAnswerId.set(null);
+    this.selectedAnswerId.set(null); // Reset the selected answer ID for single-choice questions
     this.selectedAnswerIds.set([]);
     this.userInput.set('');
     this.checked.set(false);
@@ -127,12 +127,6 @@ export class QuestionDetail implements OnInit {
     const i = questions.findIndex(q => q.id === this.#id());
     return (i >= 0 && i < questions.length - 1 ) ? questions[i + 1]?.id : undefined;
   });
-
-
-  // 
-
-
-
 
 
 }

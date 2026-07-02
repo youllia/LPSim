@@ -19,7 +19,7 @@ export class CatalogStore {
       .subscribe(data => this.catalogs.set(data));
   }
 
-  #normalize = (arr: Catalog[]) => arr.map(c => ({ ...c, id: Number(c.id) }));
+  #normalize = (arr: Catalog[]) => arr.map(c => ({ ...c, id: Number(c.id) }))
 
 
 
@@ -28,4 +28,5 @@ export class CatalogStore {
     this.#http.get<Catalog[]>(`${environment.defaultApiUrl}/catalogs?topicId=${topicId}`)
       .subscribe(data => this.catalogs.set(data));
   }
-} */
+      */
+} 
