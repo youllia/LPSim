@@ -56,9 +56,9 @@ export class QuestionDetail {
         this.#id.set(Number(params.get('questionId')));
 
         const catId = Number(params.get('catalogId'));
-        if (this.store.questions().length === 0) {
+/*         if (this.store.questions().length === 0) {
           this.store.loadByCatalog(catId);
-        }
+        } */
       }
     });
   }

@@ -36,9 +36,9 @@ export class QuestionSelect {
     }
     // Cold-load catalogs if the catalogId is not found in the current list
     const catId = this.#catalogId();
-    if (catId && !this.catalogStore.catalogs().find(c => c.id === catId)) {
+    /* if (catId && !this.catalogStore.catalogs().find(c => c.id === catId)) {
       this.catalogStore.loadOne(catId);
-    }
+    } */
     // Set the catalogId and apiUrl in the QuestionStore when they change
     fetch
         effect(() => {
