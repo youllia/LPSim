@@ -15,9 +15,13 @@
     <p>Keine Fragen in diesem Katalog.</p>
   } @else {
     <section class="question-list">
-      @for (q of questions.value(); track q.id) {
-        <app-question-card [question]="q" [catalogId]="catalogId()" />
-      }
+      <ol>
+        @for (q of questions.value(); track q.id) {
+          <li>
+            <app-question-card [question]="q" [catalogId]="catalogId()" />
+          </li>
+        }
+      </ol>
     </section>
   }
 }
