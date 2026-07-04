@@ -1,19 +1,14 @@
 <div class="options">
   @for (a of question().answers; track a.id) {
     <mat-checkbox
+      [checked]="selectedIds().includes(a.id)"
       [class.correct-answer]="checked() && a.isCorrect"
       [class.wrong-answer]="checked() && !a.isCorrect && selectedIds()
       .includes(a.id)"
-      (change)="toggle(a.id, $event.checked)">
+      (change)="toggle.emit({ id: a.id, isChecked: $event.checked })">
       {{ a.answerText }}
     </mat-checkbox>
   }
 </div>
 
-  <app-answer-actions
-  [mode]="mode()"
-  [checked]="checked()"
-  [isCorrect]="isCorrect()"
-  [correctAnswers]="correctAnswers()"
-  (pruefen)="checked.set(true)" />
 

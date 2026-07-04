@@ -3,14 +3,9 @@
   [class.wrong]="checked() && !isCorrect()">
   <input matInput
     [value]="userInput()"
-    (input)="userInput.set($any($event.target).value)"
+    (input)="textChange.emit($any($event.target).value)"
     placeholder="Antwort eingeben"
     aria-label="Antwort" />
 </mat-form-field>
 
-<app-answer-actions
-  [mode]="mode()"
-  [checked]="checked()"
-  [isCorrect]="isCorrect()"
-  [correctAnswers]="correctAnswers()"
-  (pruefen)="checked.set(true)" />
+

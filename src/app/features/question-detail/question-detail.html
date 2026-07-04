@@ -14,19 +14,54 @@
           <mat-card-title>{{ q.questionText }}</mat-card-title>
 
           <mat-card-subtitle>
-            Frage {{ questionIndex() }} von {{ questionsTotal() }}  | 
-            {{ q.hint }} | {{ q.type  | questionTypeLabel}}
+            Frage {{ questionIndex() }} von {{ questionsTotal() }}  |
+            {{ q.hint }} | {{ q.type  | questionTypeLabel }}
           </mat-card-subtitle>
         </mat-card-header>
 
         <mat-card-content>
 
           @switch (q.type) {
-            @case ('sc') { <app-answer-sc [question]="q" [mode]="mode.mode()" /> }
-            @case ('mc') { <app-answer-mc [question]="q" [mode]="mode.mode()" /> }
-            @case ('fi') { <app-answer-fi [question]="q" [mode]="mode.mode()" /> }
+            @case ('sc') {
+              <app-answer-sc
+                [question]="q"
+                [selectedId]="selectedId()"
+                [checked]="checked()"
+                (select)="selectedId.set($event)" />
+                }
+            @case ('mc') {
+              <app-answer-mc
+                [question]="q"
+                [selectedIds]="selectedIds()"
+                [checked]="checked()"
+                (toggle)="toggleMc($event.id, $event.isChecked)" />
             }
+            @case ('fi') {
+              <app-answer-fi
+                [question]="q"
+                [userInput]="userInput()"
+                [checked]="checked()"
+                [isCorrect]="isCorrect()"
+                (textChange)="userInput.set($event)" />
+            }
+          }
           </mat-card-content>
+
+          <mat-card-actions>
+            <app-answer-actions
+              [mode]="mode.mode()"
+              [checked]="checked()"
+              [isCorrect]="isCorrect()"
+              [correctAnswers]="correctAnswers()"
+              (pruefen)="checked.set(true)" />
+          </mat-card-actions>
+
+          <mat-card-actions>
+            <app-question-nav
+              [questions]="questions.value()"
+              [catalogId]="catalogId()"
+              [questionId]="questionId()" />
+          </mat-card-actions>
           }
 
           @else {
@@ -35,9 +70,5 @@
       }
   </mat-card>
 
-  <app-question-nav
-    [questions]="questions.value()"
-    [catalogId]="catalogId()"
-    [questionId]="questionId()" />
 
 

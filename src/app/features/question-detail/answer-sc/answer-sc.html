@@ -1,6 +1,6 @@
 <mat-radio-group
   [value]="selectedId()"
-  (change)="selectedId.set($event.value)">
+  (change)="select.emit($event.value)">
   @for (a of question().answers; track a.id) {
     <mat-radio-button
       [value]="a.id"
@@ -10,10 +10,3 @@
     </mat-radio-button>
   }
 </mat-radio-group>
-
-<app-answer-actions
-  [mode]="mode()"
-  [checked]="checked()"
-  [isCorrect]="isCorrect()"
-  [correctAnswers]="correctAnswers()"
-  (pruefen)="checked.set(true)" />
