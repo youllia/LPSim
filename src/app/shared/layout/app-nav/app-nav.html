@@ -1,13 +1,10 @@
-<mat-toolbar>
+<nav>
+  <mat-toolbar>
+    <a mat-button routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" ariaCurrentWhenActive="page">Kataloge</a>
+    <a mat-button routerLink="/anleitung" routerLinkActive="active" ariaCurrentWhenActive="page">Anleitung</a>
+    <span class="spacer"></span>
+    <app-mode-select />
+  </mat-toolbar>
+</nav>
 
-   <a mat-button routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" ariaCurrentWhenActive="page">Kataloge</a>
 
-   <!-- <a mat-button routerLink="/topics" routerLinkActive="active" ariaCurrentWhenActive="page">Kataloge</a> -->
-
-   <a mat-button routerLink="/anleitung" routerLinkActive="active-link" ariaCurrentWhenActive="page">Anleitung</a>
-   
-   <span class="spacer"></span>
-
-   <app-mode-select />
-
-</mat-toolbar>

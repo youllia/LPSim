@@ -1,9 +1,9 @@
 import { HttpResourceRef, httpResource } from '@angular/common/http';
-import { inject, Service } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Catalog } from '../models/catalog';
 import { API_URLS } from '../config/api.token';
 
-@Service()
+@Injectable({providedIn:'root'})
 export class CatalogStore {
   #urls = inject(API_URLS);
 
