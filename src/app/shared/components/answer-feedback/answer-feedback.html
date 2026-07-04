@@ -1,0 +1,15 @@
+@if (checked()) {
+  <div class="result" [attr.aria-invalid]="!isCorrect()">
+    <p role="alert" class="verdict"
+       [class.correct]="isCorrect()"
+       [class.incorrect]="!isCorrect()">
+      {{ isCorrect() ? 'Richtig' : 'Falsch' }}
+    </p>
+    <p>Korrekte Antwort(en):</p>
+    <ul>
+      @for (a of correctAnswers(); track a.id) {
+        <li>{{ a.answerText }}</li>
+      }
+    </ul>
+  </div>
+}

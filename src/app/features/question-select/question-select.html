@@ -1,10 +1,23 @@
-<h2>Question-list</h2>
-<!-- <ul>
-  @for (q of store.questions(); track q.id) {
-  <li>
-    <a [routerLink]="[q.id]">
-      {{ q.questionText }} ({{ q.type }} Type )
-    </a>
-  </li>
+<section class="intro">
+  <h2>Fragenliste</h2>
+</section>
+
+@if (questions.error()) {
+  <p role="alert">Fragen konnten nicht geladen werden.</p>
+}
+
+@if (questions.isLoading()) {
+  <p aria-busy="true">Lade Fragen…</p>
+}
+
+@if (questions.hasValue()) {
+  @if (questions.value().length === 0) {
+    <p>Keine Fragen in diesem Katalog.</p>
+  } @else {
+    <section class="question-list">
+      @for (q of questions.value(); track q.id) {
+        <app-question-card [question]="q" [catalogId]="catalogId()" />
+      }
+    </section>
   }
-</ul> -->
+}

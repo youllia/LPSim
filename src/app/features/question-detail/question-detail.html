@@ -1,81 +1,27 @@
-@if (question(); as q) {
+@if (questions.error()) {
+  <p role="alert">Fragen konnten nicht geladen werden.</p>
+}
 
-  <h3>{{q.questionText}}</h3>
-  <h4>{{q.hint}} | {{q.type}}</h4>
+@if (questions.isLoading()) {
+  <p aria-busy="true">Lade Fragen…</p>
+}
 
-  @switch (q.type) {
+@if (questions.hasValue()) {
+  @if (question(); as q) {
+    <h3>{{ q.questionText }}</h3>
+    <p class="hint">{{ q.hint }} | {{ q.type }}</p>
 
-  <!-- Multiple Choice -->
-    @case ('mc') {
-      @for (answer of q.answers; track answer.id) {
-        <mat-checkbox 
-          [checked]="selectedAnswerIds().includes(answer.id)" 
-          (change)="toggleSelected(answer.id, $event.checked)"
-          [class.correct-answer]="checked() && answer.isCorrect"
-          [class.wrong-selected]="checked() && !answer.isCorrect && selectedAnswerIds().includes(answer.id)">
-          {{ answer.answerText }}
-        </mat-checkbox>
-      }
+    @switch (q.type) {
+      @case ('sc') { <app-answer-sc [question]="q" [mode]="mode.mode()" /> }
+      @case ('mc') { <app-answer-mc [question]="q" [mode]="mode.mode()" /> }
+      @case ('fi') { <app-answer-fi [question]="q" [mode]="mode.mode()" /> }
     }
-
-  <!-- Single Choice -->
-    @case ('sc') {
-      <mat-radio-group [value]="selectedAnswerId()" (change)="selectedAnswerId.set($event.value)">
-        @for (answer of q.answers; track answer.id) {
-          <mat-radio-button 
-            [value]="answer.id"
-            [class.correct-answer]="checked() && answer.isCorrect"
-            [class.wrong-selected]="checked() && !answer.isCorrect && selectedAnswerId() === answer.id">
-            {{ answer.answerText }}
-          </mat-radio-button>
-        }
-      </mat-radio-group>
-    }
-
-  <!-- Fill-In -->
-    @case ('fi') {
-      <mat-form-field>
-        <mat-label>Antwort</mat-label>
-          <input matInput 
-          [value] = "userInput()"
-          (input)="userInput.set($any($event.target).value)"/>
-      </mat-form-field>
-    }
+  } @else {
+    <p role="alert">Frage wurde nicht gefunden.</p>
   }
+}
 
-  <br />
-
-    @if (mode.mode() === 'lernen') {
-      <button matButton="filled" (click)="checked.set(true)">Antwort prüfen</button>
-
-      @if (checked()) {
-        <div class="result">
-          <p class="verdict" 
-            [class.correct]="isCorrect()" 
-            [class.incorrect]="!isCorrect()">
-            {{ isCorrect() ? 'Richtig' : 'Falsch' }}
-          </p>
-          <p>Korrekte Antwort(en):</p>
-          <ul>
-            @for (a of correctAnswers(); track a.id) {
-              <li>{{ a.answerText }}</li>
-            }
-          </ul>
-        </div>
-      }
-    }
-  }
-
-<!-- Navigation zwischen Fragen -->
-
-<section class="nav">
-  @if (prevId() !== undefined) {
-    <button matButton="outlined" [routerLink]="['..', prevId()]"> ← Vorherige </button>
-  } 
-  
-  <button matButton="outlined" routerLink=".."> ≡ Fragenliste</button>
-  
-  @if (nextId() !== undefined) {
-    <button matButton="outlined" [routerLink]="['..', nextId()]"> Nächste → </button>
-  }
-</section>
+  <app-question-nav
+    [questions]="questions.value()"
+    [catalogId]="catalogId()"
+    [questionId]="questionId()" />

@@ -1,0 +1,8 @@
+<a [routerLink]="['/catalogs', catalogId(), 'questions', question().id]"
+  class="question-card"
+  [attr.data-type]="question().type">
+    <div class="question -card-content">
+      <span>{{ question().type }}</span>
+      <span>{{ question().questionText }}</span>
+    </div>
+</a>

@@ -1,0 +1,19 @@
+<mat-radio-group [value]="selectedId()" (change)="selectedId.set($event.value)">
+  @for (a of question().answers; track a.id) {
+    <mat-radio-button
+      [value]="a.id"
+      [class.correct-answer]="checked() && a.isCorrect"
+      [class.wrong-selected]="checked() && !a.isCorrect && selectedId() === a.id">
+      {{ a.answerText }}
+    </mat-radio-button>
+  }
+</mat-radio-group>
+
+@if (mode() === 'lernen') {
+  <button matButton="filled" (click)="checked.set(true)">Antwort prüfen</button>
+}
+
+<app-answer-feedback
+  [checked]="checked()"
+  [isCorrect]="isCorrect()"
+  [correctAnswers]="correctAnswers()" />

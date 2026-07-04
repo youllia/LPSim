@@ -9,5 +9,5 @@ import { Topic } from '../../models/topic';
   styleUrl: './topic-card.scss',
 })
 export class TopicCard {
-  readonly topic = input.required<Topic>();
+  readonly topic = input.required<Topic>(); // Receive a topic as an input property
 }

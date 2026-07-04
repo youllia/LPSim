@@ -6,7 +6,7 @@ import { MatSlideToggle } from '@angular/material/slide-toggle';
 
 @Component({
   selector: 'app-mode-select',
-  imports: [RouterLink, MatButtonToggleModule, MatSlideToggle],
+  imports: [ MatButtonToggleModule ],
   templateUrl: './mode-select.html',
   styleUrl: './mode-select.scss',
 })

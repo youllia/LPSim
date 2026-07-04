@@ -1,0 +1,18 @@
+@for (a of question().answers; track a.id) {
+  <mat-checkbox
+    [checked]="selectedIds().includes(a.id)"
+    (change)="toggle(a.id, $event.checked)"
+    [class.correct-answer]="checked() && a.isCorrect"
+    [class.wrong-selected]="checked() && !a.isCorrect && selectedIds().includes(a.id)">
+    {{ a.answerText }}
+  </mat-checkbox>
+}
+
+@if (mode() === 'lernen') {
+  <button matButton="filled" (click)="checked.set(true)">Antwort prüfen</button>
+}
+
+<app-answer-feedback
+  [checked]="checked()"
+  [isCorrect]="isCorrect()"
+  [correctAnswers]="correctAnswers()" />

@@ -1,0 +1,15 @@
+<mat-form-field>
+  <mat-label>Antwort</mat-label>
+  <input matInput
+    [value]="userInput()"
+    (input)="userInput.set($any($event.target).value)" />
+</mat-form-field>
+
+@if (mode() === 'lernen') {
+  <button matButton="filled" (click)="checked.set(true)">Antwort prüfen</button>
+}
+
+<app-answer-feedback
+  [checked]="checked()"
+  [isCorrect]="isCorrect()"
+  [correctAnswers]="correctAnswers()" />

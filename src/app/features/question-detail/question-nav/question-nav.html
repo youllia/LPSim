@@ -1,0 +1,18 @@
+<nav class="question-nav">
+  <a matButton="outlined"
+     [routerLink]="['/catalogs', catalogId(), 'questions']">
+    ≡ Fragenliste
+  </a>
+  @if (prevId() !== undefined) {
+    <a matButton="outlined"
+       [routerLink]="['/catalogs', catalogId(), 'questions', prevId()]">
+      ← Vorherige
+    </a>
+  }
+  @if (nextId() !== undefined) {
+    <a matButton="outlined"
+       [routerLink]="['/catalogs', catalogId(), 'questions', nextId()]">
+      Nächste →
+    </a>
+  }
+</nav>

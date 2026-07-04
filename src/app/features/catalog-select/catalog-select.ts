@@ -1,41 +1,20 @@
-import { Component, computed, effect, inject, OnInit, signal } from '@angular/core';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { Component, inject, input } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { CatalogStore } from '../../shared/services/catalog-store';
-import { TopicStore } from '../../shared/services/topic-store';
+import { CatalogCard } from '../../shared/components/catalog-card/catalog-card';
 
 @Component({
   selector: 'app-catalog-select',
-  imports: [RouterLink],
+  imports: [CatalogCard],
   templateUrl: './catalog-select.html',
   styleUrl: './catalog-select.scss',
 })
 
 export class CatalogSelect {
-  #route = inject(ActivatedRoute);
-  store = inject(CatalogStore);
-  topicStore = inject(TopicStore);
+  #catalogStore = inject(CatalogStore);
 
-  topicId = signal<number>(0);
-  #topic = computed(() => this.topicStore.topics().find(t => t.id === this.topicId()));
-  
-  constructor() {
-    this.topicId.set(Number(this.#route.snapshot.paramMap.get('topicId')));
-    
-    //Cold-load
-    if (this.topicStore.topics().length === 0) {
-      this.topicStore.load();
-    }
+  readonly topicId = input.required({ transform: Number }); // Receive the topicId as an input property
+  protected catalogs = this.#catalogStore.getByTopic(() => this.topicId());
 
-    effect(() => {
-      const topic = this.#topic();
-      if (topic) {
-        this.store.loadByTopic(topic);
-      }
-    });
-  }
 }
-  /* ngOnInit() {
-    const topicId = Number(this.#route.snapshot.paramMap.get('topicId'));
-    this.store.loadByTopic({ topicId });
-  } */
 
