@@ -1,4 +1,4 @@
-import { Component, computed, inject, input, linkedSignal } from '@angular/core';
+import { Component, computed, effect, inject, input, linkedSignal } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { QuestionStore } from '../../shared/services/question-store';
 import { AnswerCheckService } from '../../shared/services/answer-check';
@@ -9,6 +9,7 @@ import { AnswerMc } from './answer-mc/answer-mc';
 import { AnswerFi } from './answer-fi/answer-fi';
 import { AnswerActions } from '../../shared/components/answer-actions/answer-actions';
 import { QuestionTypeLabelPipe } from '../../shared/pipes/question-type-label.pipe';
+import { ExamSessionState } from '../../shared/services/exam-session-state';
 
 @Component({
   selector: 'app-question-detail',
@@ -19,6 +20,7 @@ import { QuestionTypeLabelPipe } from '../../shared/pipes/question-type-label.pi
 export class QuestionDetail {
   #store = inject(QuestionStore);
   #check = inject(AnswerCheckService);
+  #exam = inject(ExamSessionState);
   protected mode = inject(ModeState);
 
   readonly catalogId = input.required({ transform: Number });
@@ -38,11 +40,28 @@ export class QuestionDetail {
 
   protected questionsTotal = computed(() => this.questions.value().length);
 
-  // State reset
-  protected selectedId = linkedSignal<number | null>(() => { this.questionId(); return null; });
-  protected selectedIds = linkedSignal<number[]>(() => { this.questionId(); return []; });
-  protected userInput = linkedSignal<string>(() => { this.questionId(); return ''; });
-  protected checked = linkedSignal<boolean>(() => { this.questionId(); return false; });
+  // State
+  protected selectedId = linkedSignal<number | null>(() => {
+    this.questionId();
+    return this.mode.mode() === 'pruefung'
+    ? this.#exam.getAnswer(this.questionId())?.selectedId ?? null : null;
+  });
+
+  protected selectedIds = linkedSignal<number[]>(() => {
+    this.questionId();
+    return this.mode.mode() === 'pruefung'
+    ? this.#exam.getAnswer(this.questionId())?.selectedIds ?? [] : [];
+  });
+
+  protected userInput = linkedSignal<string>(() => {
+    this.questionId();
+     return this.mode.mode() === 'pruefung'
+    ? this.#exam.getAnswer(this.questionId())?.userInput ?? '' : '';
+  });
+
+  protected checked = linkedSignal<boolean>(() => {
+    this.questionId(); return false;
+  });
 
 
   protected isCorrect = computed(() => {
@@ -63,6 +82,17 @@ export class QuestionDetail {
     this.selectedIds.update(cur =>
       isChecked ? [...cur, id] : cur.filter(x => x !== id)
     );
+  }
+
+  constructor() {
+    effect(() => {
+      if (this.mode.mode() !== 'pruefung') return;
+      this.#exam.saveAnswer(this.questionId(), {
+        selectedId: this.selectedId(),
+        selectedIds: this.selectedIds(),
+        userInput: this.userInput()
+      });
+    });
   }
 }
 
