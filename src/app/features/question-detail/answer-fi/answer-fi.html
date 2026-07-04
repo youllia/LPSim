@@ -6,11 +6,9 @@
     aria-label="Antwort" />
 </mat-form-field>
 
-@if (mode() === 'lernen' && !checked()) {
-  <button matButton="filled" (click)="checked.set(true)">Antwort prüfen</button>
-}
-
-<app-answer-feedback
+<app-answer-actions
+  [mode]="mode()"
   [checked]="checked()"
   [isCorrect]="isCorrect()"
-  [correctAnswers]="correctAnswers()" />
+  [correctAnswers]="correctAnswers()"
+  (pruefen)="checked.set(true)" />

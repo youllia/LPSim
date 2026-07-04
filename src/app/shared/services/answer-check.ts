@@ -1,5 +1,3 @@
-import { Service } from '@angular/core';
-
 import { Injectable } from '@angular/core';
 import { Question } from '../models/question';
 import { Answer } from '../models/answer';

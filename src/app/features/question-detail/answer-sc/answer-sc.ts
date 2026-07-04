@@ -5,10 +5,11 @@ import { Question } from '../../../shared/models/question';
 import { Mode } from '../../../shared/models/mode';
 import { AnswerFeedback } from '../../../shared/components/answer-feedback/answer-feedback';
 import { AnswerCheckService } from '../../../shared/services/answer-check';
+import { AnswerActions } from '../../../shared/components/answer-actions/answer-actions';
 
 @Component({
   selector: 'app-answer-sc',
-  imports: [MatRadioButton, MatRadioGroup, MatButtonModule, AnswerFeedback],
+  imports: [MatRadioButton, MatRadioGroup, MatButtonModule, AnswerActions],
   templateUrl: './answer-sc.html',
   styleUrl: './answer-sc.scss'
 })
