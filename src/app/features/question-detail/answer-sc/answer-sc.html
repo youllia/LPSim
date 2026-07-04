@@ -5,7 +5,7 @@
     <mat-radio-button
       [value]="a.id"
       [class.correct-answer]="checked() && a.isCorrect"
-      [class.wrong-selected]="checked() && !a.isCorrect && selectedId() === a.id">
+      [class.wrong-answer]="checked() && !a.isCorrect && selectedId() === a.id">
       {{ a.answerText }}
     </mat-radio-button>
   }

@@ -3,7 +3,6 @@ import { MatRadioButton, MatRadioGroup } from '@angular/material/radio';
 import { MatButtonModule } from '@angular/material/button';
 import { Question } from '../../../shared/models/question';
 import { Mode } from '../../../shared/models/mode';
-import { AnswerFeedback } from '../../../shared/components/answer-feedback/answer-feedback';
 import { AnswerCheckService } from '../../../shared/services/answer-check';
 import { AnswerActions } from '../../../shared/components/answer-actions/answer-actions';
 

@@ -3,14 +3,14 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatButtonModule } from '@angular/material/button';
 import { Question } from '../../../shared/models/question';
 import { Mode } from '../../../shared/models/mode';
-import { AnswerFeedback } from '../../../shared/components/answer-feedback/answer-feedback';
 import { AnswerCheckService } from '../../../shared/services/answer-check';
 import { AnswerActions } from '../../../shared/components/answer-actions/answer-actions';
 
 @Component({
   selector: 'app-answer-mc',
   imports: [MatCheckboxModule, MatButtonModule, AnswerActions],
-  templateUrl: './answer-mc.html'
+  templateUrl: './answer-mc.html',
+  styleUrl: './answer-mc.scss'
 })
 export class AnswerMc {
   #check = inject(AnswerCheckService);

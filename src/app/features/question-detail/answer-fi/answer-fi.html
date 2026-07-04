@@ -1,4 +1,6 @@
-<mat-form-field>
+<mat-form-field
+  [class.correct]="checked() && isCorrect()"
+  [class.wrong]="checked() && !isCorrect()">
   <input matInput
     [value]="userInput()"
     (input)="userInput.set($any($event.target).value)"

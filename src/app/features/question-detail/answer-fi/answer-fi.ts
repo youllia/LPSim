@@ -11,7 +11,8 @@ import { AnswerActions } from '../../../shared/components/answer-actions/answer-
 @Component({
   selector: 'app-answer-fi',
   imports: [MatFormFieldModule, MatInputModule, MatButtonModule, AnswerActions],
-  templateUrl: './answer-fi.html'
+  templateUrl: './answer-fi.html',
+  styleUrl: './answer-fi.scss'
 })
 export class AnswerFi {
   #check = inject(AnswerCheckService);

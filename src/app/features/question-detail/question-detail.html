@@ -6,22 +6,38 @@
   <p aria-busy="true">Lade Fragen…</p>
 }
 
-@if (questions.hasValue()) {
-  @if (question(); as q) {
-    <h3>{{ q.questionText }}</h3>
-    <p class="hint">{{ q.hint }} | {{ q.type }}</p>
+<mat-card>
+  @if (questions.hasValue()) {
+    @if (question(); as q) {
 
-    @switch (q.type) {
-      @case ('sc') { <app-answer-sc [question]="q" [mode]="mode.mode()" /> }
-      @case ('mc') { <app-answer-mc [question]="q" [mode]="mode.mode()" /> }
-      @case ('fi') { <app-answer-fi [question]="q" [mode]="mode.mode()" /> }
-    }
-  } @else {
-    <p role="alert">Frage wurde nicht gefunden.</p>
-  }
-}
+        <mat-card-header>
+          <mat-card-title>{{ q.questionText }}</mat-card-title>
+
+          <mat-card-subtitle>
+            Frage {{ questionIndex() }} von {{ questionsTotal() }}  | 
+            {{ q.hint }} | {{ q.type  | questionTypeLabel}}
+          </mat-card-subtitle>
+        </mat-card-header>
+
+        <mat-card-content>
+
+          @switch (q.type) {
+            @case ('sc') { <app-answer-sc [question]="q" [mode]="mode.mode()" /> }
+            @case ('mc') { <app-answer-mc [question]="q" [mode]="mode.mode()" /> }
+            @case ('fi') { <app-answer-fi [question]="q" [mode]="mode.mode()" /> }
+            }
+          </mat-card-content>
+          }
+
+          @else {
+            <p role="alert">Frage wurde nicht gefunden.</p>
+          }
+      }
+  </mat-card>
 
   <app-question-nav
     [questions]="questions.value()"
     [catalogId]="catalogId()"
     [questionId]="questionId()" />
+
+

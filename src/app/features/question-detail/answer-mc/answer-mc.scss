@@ -1,0 +1,17 @@
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.correct-answer {
+  background-color: #d4edda;
+  border-radius: 4px;
+  padding: 0.25rem 0.5rem;
+}
+
+.wrong-answer {
+  background-color: #f8d7da;
+  border-radius: 4px;
+  padding: 0.25rem 0.5rem;
+}
