@@ -1,9 +1,10 @@
-import { Component, computed, input, linkedSignal } from '@angular/core';
+import { Component, computed, inject, input, linkedSignal } from '@angular/core';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatButtonModule } from '@angular/material/button';
 import { Question } from '../../../shared/models/question';
 import { Mode } from '../../../shared/models/mode';
 import { AnswerFeedback } from '../../../shared/components/answer-feedback/answer-feedback';
+import { AnswerCheckService } from '../../../shared/services/answer-check';
 
 @Component({
   selector: 'app-answer-mc',
@@ -11,6 +12,8 @@ import { AnswerFeedback } from '../../../shared/components/answer-feedback/answe
   templateUrl: './answer-mc.html'
 })
 export class AnswerMc {
+  #check = inject(AnswerCheckService);
+
   readonly question = input.required<Question>();
   readonly mode = input.required<Mode>();
 
@@ -24,17 +27,14 @@ export class AnswerMc {
     return false;
   });
 
-  protected isCorrect = computed(() => {
-    const q = this.question();
-    const correctIds = q.answers.filter(a => a.isCorrect).map(a => a.id).sort();
-    const selected = [...this.selectedIds()].sort();
-    return selected.length === correctIds.length
-      && selected.every((id, i) => id === correctIds[i]);
-  });
+  protected result = computed(() => this.#check.check(this.question(), {
+    selectedId: null,
+    selectedIds: this.selectedIds(),
+    userInput: ''
+  }));
 
-  protected correctAnswers = computed(() =>
-    this.question().answers.filter(a => a.isCorrect)
-  );
+  protected isCorrect = computed(() => this.result().isCorrect);
+  protected correctAnswers = computed(() => this.#check.correctAnswers(this.question()));
 
   protected toggle(id: number, isChecked: boolean) {
     this.selectedIds.update(current =>

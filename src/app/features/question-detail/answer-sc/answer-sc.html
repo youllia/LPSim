@@ -1,4 +1,6 @@
-<mat-radio-group [value]="selectedId()" (change)="selectedId.set($event.value)">
+<mat-radio-group
+  [value]="selectedId()"
+  (change)="selectedId.set($event.value)">
   @for (a of question().answers; track a.id) {
     <mat-radio-button
       [value]="a.id"
@@ -9,7 +11,7 @@
   }
 </mat-radio-group>
 
-@if (mode() === 'lernen') {
+@if (mode() === 'lernen' && !checked()) {
   <button matButton="filled" (click)="checked.set(true)">Antwort prüfen</button>
 }
 

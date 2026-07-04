@@ -1,10 +1,11 @@
-import { Component, computed, input, linkedSignal } from '@angular/core';
+import { Component, computed, inject, input, linkedSignal } from '@angular/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { Question } from '../../../shared/models/question';
 import { Mode } from '../../../shared/models/mode';
 import { AnswerFeedback } from '../../../shared/components/answer-feedback/answer-feedback';
+import { AnswerCheckService } from '../../../shared/services/answer-check';
 
 @Component({
   selector: 'app-answer-fi',
@@ -12,6 +13,8 @@ import { AnswerFeedback } from '../../../shared/components/answer-feedback/answe
   templateUrl: './answer-fi.html'
 })
 export class AnswerFi {
+  #check = inject(AnswerCheckService);
+
   readonly question = input.required<Question>();
   readonly mode = input.required<Mode>();
 
@@ -25,16 +28,12 @@ export class AnswerFi {
     return false;
   });
 
-  protected isCorrect = computed(() => {
-    const q = this.question();
-    const user = this.userInput().trim().toLowerCase();
-    if (!user) return false;
-    return q.answers.some(a =>
-      a.isCorrect && a.answerText.trim().toLowerCase() === user
-    );
-  });
+  protected result = computed(() => this.#check.check(this.question(), {
+    selectedId: null,
+    selectedIds: [],
+    userInput: this.userInput()
+  }));
 
-  protected correctAnswers = computed(() =>
-    this.question().answers.filter(a => a.isCorrect)
-  );
+  protected isCorrect = computed(() => this.result().isCorrect);
+  protected correctAnswers = computed(() => this.#check.correctAnswers(this.question()));
 }

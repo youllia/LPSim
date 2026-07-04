@@ -1,9 +1,10 @@
-import { Component, computed, input, linkedSignal } from '@angular/core';
+import { Component, computed, inject, input, linkedSignal } from '@angular/core';
 import { MatRadioButton, MatRadioGroup } from '@angular/material/radio';
 import { MatButtonModule } from '@angular/material/button';
 import { Question } from '../../../shared/models/question';
 import { Mode } from '../../../shared/models/mode';
 import { AnswerFeedback } from '../../../shared/components/answer-feedback/answer-feedback';
+import { AnswerCheckService } from '../../../shared/services/answer-check';
 
 @Component({
   selector: 'app-answer-sc',
@@ -12,6 +13,8 @@ import { AnswerFeedback } from '../../../shared/components/answer-feedback/answe
   styleUrl: './answer-sc.scss'
 })
 export class AnswerSc {
+  #check = inject(AnswerCheckService);
+
   readonly question = input.required<Question>();
   readonly mode = input.required<Mode>();
 
@@ -25,13 +28,12 @@ export class AnswerSc {
     return false;
   });
 
-  protected isCorrect = computed(() => {
-    const q = this.question();
-    const correctIds = q.answers.filter(a => a.isCorrect).map(a => a.id);
-    return correctIds.length === 1 && correctIds[0] === this.selectedId();
-  });
+  protected result = computed(() => this.#check.check(this.question(), {
+    selectedId: this.selectedId(),
+    selectedIds: [],
+    userInput: ''
+  }));
 
-  protected correctAnswers = computed(() =>
-    this.question().answers.filter(a => a.isCorrect)
-  );
+  protected isCorrect = computed(() => this.result().isCorrect);
+  protected correctAnswers = computed(() => this.#check.correctAnswers(this.question()));
 }
