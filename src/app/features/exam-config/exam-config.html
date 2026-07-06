@@ -1,1 +1,53 @@
-<p>exam-config works!</p>
+<div class="exam-config">
+  <mat-card class="catalog-panel">
+    <mat-card-header>
+      <mat-card-title>Kataloge auswählen</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      @for (topic of topics.value(); track topic.id) {
+        <h3>{{ topic.name }}</h3>
+        @for (cat of catalogsFor(topic.id) ?? []; track cat.id) {
+          <mat-checkbox
+            [checked]="isSelected(cat.id)"
+            (change)="toggleCatalog(cat.id, $event.checked)">
+            {{ cat.name }} ({{ cat.questionCount }})
+          </mat-checkbox>
+        }
+      }
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="settings-panel">
+    <mat-card-header>
+      <mat-card-title>Einstellungen</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <mat-form-field appearance="fill">
+        <mat-label>Anzahl der Fragen (leer = alle)</mat-label>
+        <input matInput type="number"
+               [value]="anzahl() ?? ''"
+               (input)="anzahl.set(+$any($event.target).value || null)"
+               min="1" />
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Dauer (Minuten)</mat-label>
+        <input matInput type="number"
+               [value]="durationMinutes()"
+               (input)="durationMinutes.set(+$any($event.target).value)"
+               min="10" max="180" />
+      </mat-form-field>
+
+      <mat-checkbox [checked]="shuffleQuestions()" (change)="shuffleQuestions.set($event.checked)">
+        Zufällige Reihenfolge
+      </mat-checkbox>
+    </mat-card-content>
+
+    <mat-card-actions>
+      <button matButton="filled" [disabled]="!canStart()" (click)="onStart()">
+        Prüfung starten
+      </button>
+      <button matButton (click)="onCancel()">Abbrechen</button>
+    </mat-card-actions>
+  </mat-card>
+</div>

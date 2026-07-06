@@ -1,0 +1,13 @@
+.intro {
+  padding: 1rem;
+}
+
+.question-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1rem;
+}
+
+p[role="alert"] { color: var(--mat-sys-error); padding: 1rem; }
+p[aria-busy="true"] { color: var(--mat-sys-on-surface-variant); padding: 1rem; }

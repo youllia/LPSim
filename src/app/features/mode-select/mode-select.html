@@ -1,6 +1,6 @@
 <!-- <p> Aktuel: {{ state.mode() }} </p> -->
 
-<mat-button-toggle-group [value]="state.mode()" (change)="state.mode.set($event.value)">
+<mat-button-toggle-group [value]="state.mode()" (change)="onModeChange($event.value)">
   <mat-button-toggle value="lernen">
     Lernmodus
   </mat-button-toggle>

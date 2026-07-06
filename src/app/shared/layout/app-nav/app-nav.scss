@@ -1,4 +1,36 @@
-.spacer { flex: 1 1 auto; } 
-a {font-size: 1rem;
-margin: 10px;
+mat-toolbar {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.spacer {
+  flex: 1;
+}
+
+@media (max-width: 599px) {
+  mat-toolbar {
+    flex-wrap: wrap;
+    justify-content: center;
+    height: auto;
+    min-height: auto;
+    padding: 12px 8px !important;
+    gap: 8px;
+  }
+
+  .spacer {
+    display: none;
+  }
+
+  a[mat-button] {
+    font-size: 1.05rem;
+    padding: 0 24px !important;
+    min-height: 48px;
+  }
+
+  mat-button-toggle-group {
+    width: 100%;
+    justify-content: center;
+    margin-top: 4px;
+  }
 }

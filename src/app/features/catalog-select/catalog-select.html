@@ -1,10 +1,10 @@
-<h2>Fragenkatalog wählen</h2>
-<ul>
-  @for (cat of store.catalogs(); track cat.id) {
-  <li>
-    <a [routerLink]="['/catalogs', cat.id, 'questions']">
-      {{ cat.name }} ({{ cat.questionCount }} Fragen)
-    </a>
-  </li>
+<section class="intro">
+  <h2>Fragenkatalog wählen</h2>
+  <!-- breadcrumb добавим позже (opt-in), пока просто заголовок -->
+</section>
+
+<section class="catalog-grid">
+  @for (cat of catalogs.value(); track cat.id) {
+    <app-catalog-card [catalog]="cat" />
   }
-</ul>
+</section>

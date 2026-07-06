@@ -1,0 +1,8 @@
+@if (mode() === 'lernen' && !checked()) {
+  <button matButton="filled" (click)="pruefen.emit()">Antwort prüfen</button>
+}
+
+<app-answer-feedback
+  [checked]="checked()"
+  [isCorrect]="isCorrect()"
+  [correctAnswers]="correctAnswers()" />

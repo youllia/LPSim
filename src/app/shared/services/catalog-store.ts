@@ -1,32 +1,30 @@
-import { HttpClient } from '@angular/common/http';
-import { inject, Service, signal } from '@angular/core';
+import { HttpResourceRef, httpResource } from '@angular/common/http';
+import { inject, Injectable } from '@angular/core';
 import { Catalog } from '../models/catalog';
 import { API_URLS } from '../config/api.token';
-import { Topic } from '../models/topic';
-import { map } from 'rxjs';
 
-@Service()
+@Injectable({providedIn:'root'})
 export class CatalogStore {
-  #http = inject(HttpClient);
   #urls = inject(API_URLS);
-  readonly catalogs = signal<Catalog[]>([]);
 
-
-   loadByTopic(topic: Topic) {
-    const base = topic.apiUrl ?? this.#urls.local;
-    this.#http.get<Catalog[]>(`${base}/catalogs?topicId=${topic.id}`)
-      .pipe(map(this.#normalize))
-      .subscribe(data => this.catalogs.set(data));
+  getAll(): HttpResourceRef<Catalog[]> {
+    return httpResource<Catalog[]>(() => ({
+      url: `${this.#urls.local}/catalogs`}), { defaultValue: [] });
   }
 
-  #normalize = (arr: Catalog[]) => arr.map(c => ({ ...c, id: Number(c.id) }))
-
-
-
-
-/*   loadByTopic(topicId: number) {
-    this.#http.get<Catalog[]>(`${environment.defaultApiUrl}/catalogs?topicId=${topicId}`)
-      .subscribe(data => this.catalogs.set(data));
+  // Fetch all catalogs associated with a specific topic ID
+  getByTopic(topicId: () => number): HttpResourceRef<Catalog[]> { // Factory function to get catalogs by topicId
+    return httpResource<Catalog[]>(() => ({
+      url: `${this.#urls.local}/catalogs`,
+      params: { topicId: topicId()} // Pass the topicId as a query parameter
+     }), { defaultValue: [] }
+  );
   }
-      */
-} 
+
+  // Fetch a single catalog by its ID
+  getSingle(id: () => number): HttpResourceRef<Catalog | undefined> {
+    return httpResource<Catalog>( //  dynamically generate the URL based on the catalog ID
+      () => (`${this.#urls.local}/catalogs/${id()}`)  // Construct the URL for fetching a single catalog by its ID
+    );
+  }
+}

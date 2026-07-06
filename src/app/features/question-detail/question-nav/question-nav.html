@@ -1,0 +1,29 @@
+<nav class="question-nav">
+  <button matButton="outlined"
+          [disabled]="prevId() === undefined"
+          (click)="goPrev()">
+    ← Vorherige
+  </button>
+
+  <button matButton="outlined"
+          [disabled]="nextId() === undefined"
+          (click)="goNext()">
+    Nächste →
+  </button>
+
+  @if (isExam()) {
+    <a matButton="filled"
+       class="finish-btn"
+       [class.muted]="!isLastQuestion()"
+       (click)="finishExam()">
+      Prüfung beenden
+    </a>
+  } @else {
+    <a matButton="filled"
+       class="finish-btn"
+       [class.muted]="!isLastQuestion()"
+       [routerLink]="['/catalogs', catalogId(), 'questions']">
+      ≡ Fragenliste
+    </a>
+  }
+</nav>
