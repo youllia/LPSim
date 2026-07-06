@@ -1,17 +1,19 @@
 <nav class="question-nav">
+  <!-- @if (!isExam()) {
   <a matButton="outlined"
      [routerLink]="['/catalogs', catalogId(), 'questions']">
     ≡ Fragenliste
   </a>
+  } -->
   @if (prevId() !== undefined) {
     <a matButton="outlined"
-       [routerLink]="['/catalogs', catalogId(), 'questions', prevId()]">
+       [routerLink]="linkTo(prevId()!)">
       ← Vorherige
     </a>
   }
   @if (nextId() !== undefined) {
     <a matButton="outlined"
-       [routerLink]="['/catalogs', catalogId(), 'questions', nextId()]">
+       [routerLink]="linkTo(nextId()!)">
       Nächste →
     </a>
   }

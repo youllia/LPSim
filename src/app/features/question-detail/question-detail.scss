@@ -48,17 +48,52 @@ mat-radio-group,
   gap: 0.5rem;
 }
 
-mat-card-actions {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  align-items: stretch;
-  margin-top: auto;
+// mat-card-actions {
+//   display: flex;
+//   flex-direction: column;
+//   gap: 1rem;
+//   align-items: stretch;
+//   margin-top: auto;
+// }
+
+mat-card {
+  position: relative;
 }
 
-button[matButton] {
-  margin-top: 0.5rem;
+mat-card-actions {
+  button {
+    align-self: flex-end;   // right ( flex-direction: column)
+    min-width: 200px;
+  }
 }
+
+.finish-wrapper {
+  display: flex;
+  justify-content: flex-end;
+
+  button {
+    min-width: 200px;
+  }
+}
+
+.muted {
+  opacity: 0.6;
+  transition: opacity 0.2s;
+
+  &:hover {
+    opacity: 1;
+  }
+}
+
+.finish-btn {
+  position: absolute;
+  right: 1rem;
+  bottom: 1rem;
+}
+
+// button[matButton] {
+//   margin-top: 0.5rem;
+// }
 
 .nav {
   display: flex;

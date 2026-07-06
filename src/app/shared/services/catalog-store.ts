@@ -7,6 +7,11 @@ import { API_URLS } from '../config/api.token';
 export class CatalogStore {
   #urls = inject(API_URLS);
 
+  getAll(): HttpResourceRef<Catalog[]> {
+    return httpResource<Catalog[]>(() => ({
+      url: `${this.#urls.local}/catalogs`}), { defaultValue: [] });
+  }
+
   // Fetch all catalogs associated with a specific topic ID
   getByTopic(topicId: () => number): HttpResourceRef<Catalog[]> { // Factory function to get catalogs by topicId
     return httpResource<Catalog[]>(() => ({

@@ -1,1 +1,45 @@
-<p>exam-result works!</p>
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Prüfungsergebnis</mat-card-title>
+    <mat-card-subtitle>
+      {{ correctCount() }} von {{ total() }} richtig ({{ percentage() }}%)
+    </mat-card-subtitle>
+  </mat-card-header>
+
+  <mat-card-content>
+    @if (wrongResults().length > 0) {
+      <h3>Falsche Antworten</h3>
+      @for (r of wrongResults(); track r.question.id) {
+        <div class="wrong-block">
+          <p class="q">{{ r.question.questionText }}</p>
+          <p class="label">Richtige Antwort(en):</p>
+          <ul>
+            @for (a of r.result.missing; track a.id) {
+              <li class="correct">{{ a.answerText }}</li>
+            }
+          </ul>
+          @if (r.result.extra.length > 0) {
+            <p class="label">Du hast fälschlich gewählt:</p>
+            <ul>
+              @for (a of r.result.extra; track a.id) {
+                <li class="wrong">{{ a.answerText }}</li>
+              }
+            </ul>
+          }
+        </div>
+      }
+    } @else {
+      <p>Alle Fragen richtig beantwortet! 🎉</p>
+    }
+  </mat-card-content>
+
+  <mat-card-actions>
+  <button matButton="outlined" (click)="onNewExam()">
+    Neue Prüfung starten
+  </button>
+  <button matButton="filled" color="primary" (click)="onRestart()">
+    Zurück zur Themenauswahl
+  </button>
+</mat-card-actions>
+
+</mat-card>

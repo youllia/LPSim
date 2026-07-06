@@ -6,6 +6,8 @@ import { QuestionDetail } from './features/question-detail/question-detail';
 import { ModeSelect } from './features/mode-select/mode-select';
 import { Anleitung } from './features/anleitung/anleitung';
 import { NotFound } from './features/not-found/not-found';
+import { ExamResult } from './features/exam-result/exam-result';
+import { ExamConfig } from './features/exam-config/exam-config';
 
 export const routes: Routes = [
   { path: '', component: TopicSelect },
@@ -15,6 +17,9 @@ export const routes: Routes = [
   { path: 'catalogs/:catalogId/questions', component: QuestionSelect },
   { path: 'catalogs/:catalogId/questions/:questionId', component: QuestionDetail },
   { path: 'mode', component: ModeSelect },
+  { path: 'exam/config', component: ExamConfig, title: 'LPSim — Prüfung Einstellungen' },
+  { path: 'exam/question/:questionId', component: QuestionDetail, title: 'LPSim — Prüfung' },
+  { path: 'exam/result', component: ExamResult, title: 'LPSim — Ergebnis' },
   { path: '**', component: NotFound}
-];
+  ];
 

@@ -1,0 +1,25 @@
+.exam-config {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: 1fr;
+
+  @media (min-width: 900px) {
+    grid-template-columns: 2fr 1fr;
+  }
+}
+
+.catalog-panel,
+.settings-panel {
+  mat-checkbox {
+    display: block;
+    margin: 0.25rem 0;
+  }
+  h3 {
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+  }
+  mat-form-field {
+    display: block;
+    margin-bottom: 1rem;
+  }
+}

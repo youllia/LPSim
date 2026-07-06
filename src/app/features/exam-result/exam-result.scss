@@ -1,0 +1,10 @@
+.wrong-block {
+  margin-bottom: 1.5rem;
+  padding: 0.75rem;
+  border-left: 4px solid #f44336;
+
+  .q { font-weight: bold; }
+  .label { margin-top: 0.5rem; color: #666; }
+  .correct { color: #2e7d32; }
+  .wrong { color: #c62828; }
+}
