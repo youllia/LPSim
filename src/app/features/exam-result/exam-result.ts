@@ -1,5 +1,5 @@
 import { Component, computed, inject } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { ExamSessionState } from '../../shared/services/exam-session-state';
@@ -9,7 +9,7 @@ import { ModeState } from '../../shared/services/mode-state';
 
 @Component({
   selector: 'app-exam-result',
-  imports: [MatButtonModule, MatCardModule, RouterLink],
+  imports: [MatButtonModule, MatCardModule],
   templateUrl: './exam-result.html',
   styleUrl: './exam-result.scss',
 })

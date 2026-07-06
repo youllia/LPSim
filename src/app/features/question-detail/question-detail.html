@@ -61,29 +61,6 @@
               [questions]="questionsForNav()"
               [catalogId]="catalogId()"
               [questionId]="questionId()" />
-
-              @if (mode.mode() === 'pruefung') {
-                  <a matButton="outlined" class="muted finish-btn" (click)="finishExam()">
-                    Prüfung beenden
-                  </a>
-                } @else {
-                  <a matButton="outlined" class="muted finish-btn"
-                    [routerLink]="['/catalogs', catalogId(), 'questions']">
-                    ≡ Fragenliste
-                  </a>
-                }
-            <!-- @if (mode.mode() === 'pruefung') {
-              <div class="finish-wrapper">
-                <button matButton="outlined"
-                [class.muted]="answeredCount() === 0"
-                class ="muted finish-btn"
-                (click)="finishExam()"
-                style="align-self: flex-end">
-                  Prüfung beenden
-                </button>
-            </div>
-            }-->
-
           </mat-card-actions>
           }
 

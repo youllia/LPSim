@@ -10,15 +10,12 @@ import { AnswerMc } from './answer-mc/answer-mc';
 import { AnswerFi } from './answer-fi/answer-fi';
 import { AnswerActions } from '../../shared/components/answer-actions/answer-actions';
 import { QuestionTypeLabelPipe } from '../../shared/pipes/question-type-label.pipe';
-import { Router } from '@angular/router';
-import { MatButtonModule } from '@angular/material/button';
-import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-question-detail',
   imports: [
     QuestionNav, AnswerSc, AnswerMc, AnswerFi,
-    AnswerActions, QuestionTypeLabelPipe, MatCardModule, MatButtonModule, RouterLink
+    AnswerActions, QuestionTypeLabelPipe, MatCardModule
   ],
   templateUrl: './question-detail.html',
   styleUrl: './question-detail.scss',
@@ -27,7 +24,7 @@ export class QuestionDetail {
   #store = inject(QuestionStore);
   #check = inject(AnswerCheckService);
   #exam = inject(ExamSessionState);
-  #router = inject(Router);
+
   protected mode = inject(ModeState);
 
   readonly catalogId = input.required({ transform: Number });
@@ -118,11 +115,11 @@ export class QuestionDetail {
     });
   }
 
-  protected answeredCount = this.#exam.answeredCount;
+  // protected answeredCount = this.#exam.answeredCount;
 
-  finishExam(): void {
-  this.#exam.submit();
-  this.#router.navigate(['/exam/result']);
-}
+//   finishExam(): void {
+//   this.#exam.submit();
+//   this.#router.navigate(['/exam/result']);
+// }
 
 }
