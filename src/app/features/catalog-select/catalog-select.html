@@ -1,10 +1,49 @@
-<section class="intro">
-  <h2>Fragenkatalog wählen</h2>
-  <!-- breadcrumb добавим позже (opt-in), пока просто заголовок -->
-</section>
+<nav class="lp-crumbs" aria-label="Brotkrumen">
+  <a routerLink="/">Themenbereiche</a>
+  <span class="sep" aria-hidden="true">/</span>
+  <span class="current">Kataloge</span>
+</nav>
 
-<section class="catalog-grid">
-  @for (cat of catalogs.value(); track cat.id) {
-    <app-catalog-card [catalog]="cat" />
+<div class="lp-section-head">
+  <h1>Fragenkatalog wählen</h1>
+  @if (catalogs.hasValue() && catalogs.value().length) {
+    <span class="count">{{ catalogs.value().length }} Kataloge</span>
   }
-</section>
+</div>
+
+@if (catalogs.error()) {
+  <div class="lp-state" data-tone="error" role="alert">
+    <span class="lp-state-icon">
+      <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor"
+           stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M12 9v4M12 17h.01" />
+        <path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z" />
+      </svg>
+    </span>
+    <h3>Kataloge konnten nicht geladen werden</h3>
+    <p>Prüfe die Verbindung zur Web-API und versuche es erneut.</p>
+  </div>
+} @else if (catalogs.isLoading()) {
+  <section class="catalog-grid" aria-busy="true">
+    @for (i of [1, 2, 3, 4, 5, 6]; track i) {
+      <div class="lp-skeleton catalog-skeleton"></div>
+    }
+  </section>
+} @else if (catalogs.value().length === 0) {
+  <div class="lp-state">
+    <span class="lp-state-icon">
+      <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor"
+           stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M4 6h16M4 12h16M4 18h10" />
+      </svg>
+    </span>
+    <h3>Keine Kataloge in diesem Themenbereich</h3>
+    <p>Wähle einen anderen Themenbereich oder schau später wieder vorbei.</p>
+  </div>
+} @else {
+  <section class="catalog-grid">
+    @for (cat of catalogs.value(); track cat.id) {
+      <app-catalog-card [catalog]="cat" />
+    }
+  </section>
+}

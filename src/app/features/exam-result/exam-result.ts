@@ -1,7 +1,6 @@
 import { Component, computed, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
-import { MatCardModule } from '@angular/material/card';
 import { ExamSessionState } from '../../shared/services/exam-session-state';
 import { AnswerCheckService } from '../../shared/services/answer-check';
 import { ModeState } from '../../shared/services/mode-state';
@@ -9,7 +8,7 @@ import { ModeState } from '../../shared/services/mode-state';
 
 @Component({
   selector: 'app-exam-result',
-  imports: [MatButtonModule, MatCardModule],
+  imports: [MatButtonModule],
   templateUrl: './exam-result.html',
   styleUrl: './exam-result.scss',
 })
@@ -43,6 +42,13 @@ export class ExamResult {
   protected percentage = computed(() => {
     const total = this.total();
     return total > 0 ? Math.round((this.correctCount() / total) * 100) : 0;
+  });
+
+  protected tone = computed(() => {
+    const p = this.percentage();
+    if (p >= 80) return 'ok';
+    if (p >= 50) return 'mid';
+    return 'low';
   });
 
   onRestart(): void {

@@ -1,81 +1,446 @@
-// Include theming for Angular Material with `mat.theme()`.
-// This Sass mixin will define CSS variables that are used for styling Angular Material
-// components according to the Material 3 design spec.
-// Learn more about theming and how to use it for your application's
-// custom components at https://material.angular.dev/guide/theming
+// ============================================================================
+//  LPSim — Global styles
+//  Angular Material 3 theme wired to Inter + our OKLCH token layer (_tokens).
+// ============================================================================
 @use '@angular/material' as mat;
-
-:root {
-  --page-max: 1200px;
-  --page-gutter: 1rem;
-}
+@use './styles/tokens' as tokens;
 
 html {
   height: 100%;
+  color-scheme: light;
+
   @include mat.theme(
     (
       color: (
-        primary: mat.$azure-palette,
-        tertiary: mat.$blue-palette,
+        primary: mat.$cyan-palette,
+        tertiary: mat.$orange-palette,
       ),
-      typography: Roboto,
+      typography: (
+        plain-family: 'Inter, sans-serif',
+        brand-family: 'Inter, sans-serif',
+        bold-weight: 700,
+        medium-weight: 600,
+        regular-weight: 400,
+      ),
       density: 0,
     )
   );
 }
 
-body {
-  // Default the application to a light color theme. This can be changed to
-  // `dark` to enable the dark color theme, or to `light dark` to defer to the
-  // user's system settings.
-  color-scheme: light;
-
-  // Set a default background, font and text colors for the application using
-  // Angular Material's system-level CSS variables. Learn more about these
-  // variables at https://material.angular.dev/guide/system-variables
-  background-color: var(--mat-sys-surface);
-  color: var(--mat-sys-on-surface);
-  font: var(--mat-sys-body-medium);
-
-  // Reset the user agent margin.
-  margin: 0;
-  height: 100%;
-  font-family: Roboto, sans-serif;
-}
-/* You can add global styles to this file, and also import other style files */
-
-app-header,
-app-nav,
-main,
-app-footer {
-  display: block;
-  max-width: var(--page-max);
-  margin: 0 auto;
-  padding: 0 var(--page-gutter);
-  box-sizing: border-box;
+// Structural + colour tokens. Applied after mat.theme so they win.
+:root {
+  @include tokens.base;
+  @include tokens.sys-light;
 }
 
-main {
-  padding-top: 1.5rem;
-  padding-bottom: 2rem;
-   width: 100%;
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  @include tokens.sys-dark;
 }
 
+// Follow the OS the very first paint, before the theme store hydrates,
+// so there is no flash for users who prefer dark.
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    color-scheme: dark;
+    @include tokens.sys-dark;
+  }
+}
 
-// html, body {
-//   margin: 0;
-//   padding: 0;
-//   font-family: Arial, Helvetica, sans-serif, "Helvetica Neue", sans-serif;
-//   background: #fafafa;
-//   color: rgba(0, 0, 0, 0.87);
-//   min-height: 100vh;
-// }
-
+// ---------------------------------------------------------------------------
+//  Base elements
+// ---------------------------------------------------------------------------
 * {
   box-sizing: border-box;
 }
 
-h1, h2, h3, h4 {
-  margin-top: 0;
+html,
+body {
+  margin: 0;
+  min-height: 100%;
 }
 
+body {
+  background-color: var(--mat-sys-background);
+  color: var(--mat-sys-on-surface);
+  font-family: var(--lp-font-sans);
+  font-size: 1rem;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  font-synthesis: none;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  margin: 0 0 var(--lp-space-3);
+  font-family: var(--lp-font-sans);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.014em;
+  color: var(--mat-sys-on-surface);
+  text-wrap: balance;
+}
+
+h1 {
+  font-size: clamp(1.65rem, 1.2rem + 1.6vw, 2.1rem);
+}
+h2 {
+  font-size: 1.5rem;
+}
+h3 {
+  font-size: 1.2rem;
+}
+
+p {
+  margin: 0 0 var(--lp-space-4);
+  max-width: 72ch;
+}
+
+a {
+  color: var(--mat-sys-primary);
+  text-underline-offset: 2px;
+}
+
+strong {
+  font-weight: 600;
+}
+
+// Inline Linux commands / paths — the content is full of them.
+code,
+kbd,
+samp,
+.lp-code {
+  font-family: var(--lp-font-mono);
+  font-size: 0.9em;
+  background: var(--lp-code-surface);
+  color: var(--lp-code-on-surface);
+  border: 1px solid var(--lp-code-border);
+  border-radius: var(--lp-radius-xs);
+  padding: 0.12em 0.42em;
+}
+
+::selection {
+  background: var(--mat-sys-primary-container);
+  color: var(--mat-sys-on-primary-container);
+}
+
+// Consistent, brand-tinted focus ring across the app.
+:where(a, button, [tabindex], input, textarea, select):focus-visible {
+  outline: 2px solid transparent;
+  box-shadow: var(--lp-ring);
+  border-radius: var(--lp-radius-sm);
+}
+
+// ---------------------------------------------------------------------------
+//  App shell
+// ---------------------------------------------------------------------------
+app-header,
+app-nav {
+  display: block;
+}
+
+main {
+  display: block;
+  width: 100%;
+  max-width: var(--lp-page-max);
+  margin: 0 auto;
+  padding: var(--lp-space-6) var(--lp-space-5) var(--lp-space-7);
+  box-sizing: border-box;
+}
+
+@media (max-width: 600px) {
+  main {
+    padding: var(--lp-space-5) var(--lp-space-4) var(--lp-space-6);
+  }
+}
+
+// ---------------------------------------------------------------------------
+//  Material component polish (surface-level, brand-consistent)
+// ---------------------------------------------------------------------------
+
+// Cards — softer radius, hairline border, our elevation.
+.mat-mdc-card {
+  --mdc-elevated-card-container-color: var(--mat-sys-surface);
+  border-radius: var(--lp-radius-lg) !important;
+  border: 1px solid var(--mat-sys-outline-variant);
+  box-shadow: var(--lp-shadow-sm) !important;
+  overflow: clip;
+}
+
+// Buttons — a touch bolder, pill-free but generously rounded.
+.mat-mdc-button,
+.mat-mdc-outlined-button,
+.mat-mdc-unelevated-button,
+.mat-mdc-raised-button {
+  --mdc-text-button-label-text-weight: 600;
+  --mdc-outlined-button-label-text-weight: 600;
+  --mdc-filled-button-label-text-weight: 600;
+  --mdc-outlined-button-container-shape: var(--lp-radius-sm);
+  --mdc-filled-button-container-shape: var(--lp-radius-sm);
+  --mdc-text-button-container-shape: var(--lp-radius-sm);
+  --mdc-protected-button-container-shape: var(--lp-radius-sm);
+  letter-spacing: 0;
+}
+
+.mat-mdc-outlined-button:not(:disabled) {
+  --mdc-outlined-button-outline-color: var(--mat-sys-outline-variant);
+}
+
+// Filled buttons lift slightly on hover.
+.mat-mdc-unelevated-button {
+  transition:
+    transform var(--lp-dur-2) var(--lp-ease),
+    box-shadow var(--lp-dur-2) var(--lp-ease);
+}
+.mat-mdc-unelevated-button:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: var(--lp-shadow-md);
+}
+
+// Segmented control (mode toggle).
+.mat-button-toggle-group {
+  --mat-standard-button-toggle-shape: var(--lp-radius-pill);
+  border-radius: var(--lp-radius-pill);
+  border-color: var(--mat-sys-outline-variant);
+  overflow: hidden;
+  background: var(--mat-sys-surface-container-low);
+}
+
+// Form fields.
+.mat-mdc-form-field {
+  --mat-sys-corner-extra-small: var(--lp-radius-sm);
+  width: 100%;
+}
+
+// Checkbox / radio inherit primary automatically via sys tokens.
+
+// ---------------------------------------------------------------------------
+//  Shared utilities (badges, states, skeletons)
+// ---------------------------------------------------------------------------
+
+// Pill badge.
+.lp-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.28rem 0.7rem;
+  border-radius: var(--lp-radius-pill);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  background: var(--mat-sys-primary-container);
+  color: var(--mat-sys-on-primary-container);
+  border: 1px solid transparent;
+}
+
+// Breadcrumb.
+.lp-crumbs {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem;
+  margin-bottom: var(--lp-space-4);
+  font-size: 0.85rem;
+  color: var(--mat-sys-on-surface-variant);
+
+  a {
+    color: var(--mat-sys-on-surface-variant);
+    text-decoration: none;
+    border-radius: var(--lp-radius-xs);
+
+    &:hover {
+      color: var(--mat-sys-primary);
+    }
+  }
+
+  .sep {
+    opacity: 0.5;
+  }
+
+  .current {
+    color: var(--mat-sys-on-surface);
+    font-weight: 600;
+  }
+}
+
+// Section header (title + count/actions).
+.lp-section-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  margin: var(--lp-space-6) 0 var(--lp-space-4);
+
+  h2 {
+    margin: 0;
+  }
+
+  .count {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--mat-sys-on-surface-variant);
+  }
+}
+
+// Empty / error / loading message block.
+.lp-state {
+  display: grid;
+  place-items: center;
+  gap: 0.5rem;
+  text-align: center;
+  padding: clamp(2rem, 6vw, 3.5rem) 1.5rem;
+  border: 1px dashed var(--mat-sys-outline-variant);
+  border-radius: var(--lp-radius-lg);
+  background: var(--mat-sys-surface-container-low);
+  color: var(--mat-sys-on-surface-variant);
+
+  .lp-state-icon {
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    border-radius: var(--lp-radius-md);
+    background: var(--mat-sys-surface-container-high);
+    color: var(--mat-sys-primary);
+  }
+
+  h3 {
+    margin: 0;
+    color: var(--mat-sys-on-surface);
+  }
+
+  p {
+    margin: 0;
+    max-width: 44ch;
+  }
+
+  &[data-tone='error'] {
+    border-color: color-mix(in oklab, var(--mat-sys-error) 40%, transparent);
+    .lp-state-icon {
+      background: var(--mat-sys-error-container);
+      color: var(--mat-sys-on-error-container);
+    }
+  }
+}
+
+// Skeleton shimmer (animates background-position, not layout).
+.lp-skeleton {
+  position: relative;
+  overflow: hidden;
+  background: var(--mat-sys-surface-container-high);
+  border-radius: var(--lp-radius-md);
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      color-mix(in oklab, var(--mat-sys-surface-bright) 60%, transparent),
+      transparent
+    );
+    transform: translateX(-100%);
+    animation: lp-shimmer 1.3s var(--lp-ease-in-out) infinite;
+  }
+}
+
+@keyframes lp-shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+// ---------------------------------------------------------------------------
+//  Answer option rows (shared by Single- and Multiple-Choice)
+// ---------------------------------------------------------------------------
+.opt-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.opt {
+  display: flex !important;
+  align-items: center;
+  width: 100%;
+  margin: 0 !important;
+  padding: 0.3rem 0.95rem 0.3rem 0.35rem;
+  border: 1.5px solid var(--mat-sys-outline-variant);
+  border-radius: var(--lp-radius-md);
+  background: var(--mat-sys-surface);
+  cursor: pointer;
+  transition:
+    border-color var(--lp-dur-2) var(--lp-ease),
+    background var(--lp-dur-2) var(--lp-ease);
+
+  .mdc-form-field {
+    flex: 1;
+    width: 100%;
+  }
+
+  label {
+    flex: 1;
+    padding: 0.35rem 0 0.35rem 0.1rem !important;
+    line-height: 1.45;
+    cursor: pointer;
+  }
+
+  &:hover {
+    border-color: color-mix(in oklab, var(--mat-sys-primary) 50%, transparent);
+    background: var(--mat-sys-surface-container-low);
+  }
+
+  // Chosen (before the answer is checked).
+  &:has(input:checked) {
+    border-color: var(--mat-sys-primary);
+    background: color-mix(in oklab, var(--mat-sys-primary-container) 40%, transparent);
+  }
+
+  // After checking: correctness verdicts (full border + tint + trailing label).
+  &--correct,
+  &--correct:has(input:checked) {
+    border-color: var(--lp-success);
+    background: color-mix(in oklab, var(--lp-success-container) 45%, transparent);
+  }
+
+  &--wrong,
+  &--wrong:has(input:checked) {
+    border-color: var(--mat-sys-error);
+    background: color-mix(in oklab, var(--mat-sys-error-container) 45%, transparent);
+  }
+
+  &--correct::after,
+  &--wrong::after {
+    margin-left: auto;
+    padding-left: 0.6rem;
+    font-size: 0.78rem;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+
+  &--correct::after {
+    content: '✓ Richtig';
+    color: var(--lp-on-success-container);
+  }
+
+  &--wrong::after {
+    content: '✕ Falsch';
+    color: var(--mat-sys-on-error-container);
+  }
+}
+
+// Snappy, reduced-motion aware transitions everywhere Material animates.
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}

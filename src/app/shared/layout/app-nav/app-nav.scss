@@ -1,36 +1,71 @@
-mat-toolbar {
+:host {
+  display: block;
+  background: var(--mat-sys-surface);
+  border-bottom: 1px solid var(--mat-sys-outline-variant);
+}
+
+.bar {
+  max-width: var(--lp-page-max);
+  margin: 0 auto;
+  padding: 0.5rem var(--lp-space-5);
   display: flex;
-  gap: 0.5rem;
   align-items: center;
+  justify-content: space-between;
+  gap: var(--lp-space-4);
 }
 
-.spacer {
-  flex: 1;
+.tabs {
+  display: flex;
+  gap: 0.25rem;
 }
 
-@media (max-width: 599px) {
-  mat-toolbar {
+.tab {
+  --_active: transparent;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  padding: 0.5rem 0.9rem;
+  border-radius: var(--lp-radius-sm);
+  font-weight: 600;
+  font-size: 0.95rem;
+  text-decoration: none;
+  color: var(--mat-sys-on-surface-variant);
+  transition:
+    color var(--lp-dur-2) var(--lp-ease),
+    background var(--lp-dur-2) var(--lp-ease);
+
+  &::after {
+    content: '';
+    position: absolute;
+    left: 0.9rem;
+    right: 0.9rem;
+    bottom: -0.5rem;
+    height: 2px;
+    border-radius: 2px;
+    background: var(--_active);
+    transition: background var(--lp-dur-2) var(--lp-ease);
+  }
+
+  &:hover {
+    color: var(--mat-sys-on-surface);
+    background: var(--mat-sys-surface-container-high);
+  }
+
+  &.active {
+    color: var(--mat-sys-primary);
+    --_active: var(--mat-sys-primary);
+  }
+}
+
+@media (max-width: 600px) {
+  .bar {
     flex-wrap: wrap;
     justify-content: center;
-    height: auto;
-    min-height: auto;
-    padding: 12px 8px !important;
-    gap: 8px;
+    padding: 0.5rem var(--lp-space-4);
+    gap: 0.5rem;
   }
 
-  .spacer {
-    display: none;
-  }
-
-  a[mat-button] {
-    font-size: 1.05rem;
-    padding: 0 24px !important;
-    min-height: 48px;
-  }
-
-  mat-button-toggle-group {
+  app-mode-select {
     width: 100%;
-    justify-content: center;
-    margin-top: 4px;
   }
 }

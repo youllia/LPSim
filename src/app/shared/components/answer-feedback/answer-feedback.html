@@ -1,15 +1,30 @@
 @if (checked()) {
-  <div class="result" [attr.aria-invalid]="!isCorrect()">
-    <p role="alert" class="verdict"
-       [class.correct]="isCorrect()"
-       [class.incorrect]="!isCorrect()">
-      {{ isCorrect() ? 'Richtig' : 'Falsch' }}
-    </p>
-    <p>Korrekte Antwort(en):</p>
-    <ul>
-      @for (a of correctAnswers(); track a.id) {
-        <li>{{ a.answerText }}</li>
-      }
-    </ul>
+  <div class="feedback" role="status"
+       [class.feedback--ok]="isCorrect()" [class.feedback--no]="!isCorrect()">
+    <div class="fb-head">
+      <span class="fb-icon" aria-hidden="true">
+        @if (isCorrect()) {
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor"
+               stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20 6 9 17l-5-5" />
+          </svg>
+        } @else {
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor"
+               stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M18 6 6 18M6 6l12 12" />
+          </svg>
+        }
+      </span>
+      <span class="fb-verdict">{{ isCorrect() ? 'Richtig beantwortet' : 'Leider falsch' }}</span>
+    </div>
+
+    <div class="fb-body">
+      <span class="fb-label">Korrekte Antwort(en)</span>
+      <ul class="fb-list">
+        @for (a of correctAnswers(); track a.id) {
+          <li>{{ a.answerText }}</li>
+        }
+      </ul>
+    </div>
   </div>
 }

@@ -1,25 +1,85 @@
-<article>
-  <h1>So lernst du effektiv</h1>
+<article class="guide">
+  <header class="guide-hero">
+    <span class="lp-badge">Anleitung</span>
+    <h1>So lernst du effektiv</h1>
+    <p class="guide-lead">
+      LPSim trennt bewusst zwei Phasen: erst verstehen, dann prüfen. Wähle den
+      passenden Modus für deinen aktuellen Lernstand.
+    </p>
+  </header>
 
-  <section>
-    <h2>Zwei Modi</h2>
-    <p><strong>Lernmodus</strong>: du siehst auf Wunsch die Lösung, ohne Zeitdruck.</p>
-    <p><strong>Prüfungsmodus</strong>: konfigurierbare Anzahl an Fragen mit Zeitbegrenzung.</p>
+  <section class="mode-cards">
+    <article class="mode-card mode-card--learn">
+      <span class="mc-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor"
+             stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4 5.5A1.5 1.5 0 0 1 5.5 4H11v15H5.5A1.5 1.5 0 0 1 4 17.5z" />
+          <path d="M20 5.5A1.5 1.5 0 0 0 18.5 4H13v15h5.5a1.5 1.5 0 0 0 1.5-1.5z" />
+        </svg>
+      </span>
+      <h2>Lernmodus</h2>
+      <p>Ohne Zeitdruck. Du entscheidest, ob und wann du die Lösung aufdeckst.</p>
+      <ul>
+        <li>Antworten selbst prüfen lassen</li>
+        <li>Sofortiges Feedback richtig oder falsch</li>
+        <li>Frei zwischen den Fragen navigieren</li>
+      </ul>
+    </article>
+
+    <article class="mode-card mode-card--exam">
+      <span class="mc-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor"
+             stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="13" r="8" /><path d="M12 9v4l2.5 2.5M9 2h6" />
+        </svg>
+      </span>
+      <h2>Prüfungssimulation</h2>
+      <p>Reale Bedingungen mit Timer. Die Auswertung erscheint erst am Ende.</p>
+      <ul>
+        <li>Anzahl der Fragen und Dauer frei wählbar</li>
+        <li>Kein Feedback während des Durchlaufs</li>
+        <li>Detaillierte Ergebnis-Übersicht danach</li>
+      </ul>
+    </article>
   </section>
 
-  <section>
+  <section class="guide-block">
     <h2>Empfehlungen</h2>
-    <ul>
-      <li>Nicht raten — versuche zuerst, die Antwort zu begründen.</li>
+    <ul class="tips">
+      <li>Nicht raten. Versuche zuerst, die Antwort zu begründen.</li>
       <li>Arbeite einen Katalog vollständig durch, bevor du zum nächsten wechselst.</li>
       <li>Nutze die Prüfungssimulation erst, wenn du dich in einem Katalog sicher fühlst.</li>
     </ul>
   </section>
 
-  <section>
+  <section class="guide-block">
     <h2>Drei Fragetypen</h2>
-    <p><strong>Single-Choice</strong> — genau eine richtige Antwort (Radio-Button).</p>
-    <p><strong>Multiple-Choice</strong> — mehrere richtige Antworten (Checkbox).</p>
-    <p><strong>Fill-In</strong> — Antwort selbst eingeben (Kommando, Pfad, Begriff).</p>
+    <div class="type-grid">
+      <div class="type-item">
+        <span class="type-tag" data-type="sc">SC</span>
+        <div>
+          <strong>Single-Choice</strong>
+          <p>Genau eine richtige Antwort, ausgewählt per Radio-Button.</p>
+        </div>
+      </div>
+      <div class="type-item">
+        <span class="type-tag" data-type="mc">MC</span>
+        <div>
+          <strong>Multiple-Choice</strong>
+          <p>Mehrere richtige Antworten, ausgewählt per Checkbox.</p>
+        </div>
+      </div>
+      <div class="type-item">
+        <span class="type-tag" data-type="fi">FI</span>
+        <div>
+          <strong>Fill-In</strong>
+          <p>Antwort selbst eingeben, etwa ein Kommando oder einen Pfad.</p>
+        </div>
+      </div>
+    </div>
   </section>
+
+  <div class="guide-cta">
+    <a matButton="filled" routerLink="/">Zu den Katalogen</a>
+  </div>
 </article>

@@ -5,7 +5,7 @@ import { CatalogCard } from '../../shared/components/catalog-card/catalog-card';
 
 @Component({
   selector: 'app-catalog-select',
-  imports: [CatalogCard],
+  imports: [CatalogCard, RouterLink],
   templateUrl: './catalog-select.html',
   styleUrl: './catalog-select.scss',
 })

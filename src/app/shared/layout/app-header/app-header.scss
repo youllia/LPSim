@@ -1,0 +1,102 @@
+:host {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: block;
+  background: color-mix(in oklab, var(--mat-sys-surface) 88%, transparent);
+  backdrop-filter: saturate(1.4) blur(10px);
+  border-bottom: 1px solid var(--mat-sys-outline-variant);
+}
+
+.bar {
+  max-width: var(--lp-page-max);
+  margin: 0 auto;
+  padding: 0.7rem var(--lp-space-5);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--lp-space-4);
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  text-decoration: none;
+  color: var(--mat-sys-on-surface);
+  border-radius: var(--lp-radius-sm);
+}
+
+.brand-mark {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border-radius: var(--lp-radius-sm);
+  color: var(--mat-sys-on-primary);
+  background: linear-gradient(
+    145deg,
+    var(--mat-sys-primary),
+    color-mix(in oklab, var(--mat-sys-primary) 70%, var(--mat-sys-tertiary))
+  );
+  box-shadow: var(--lp-shadow-sm);
+}
+
+.brand-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1;
+}
+
+.brand-name {
+  font-weight: 700;
+  font-size: 1.05rem;
+  letter-spacing: -0.02em;
+}
+
+.brand-accent {
+  color: var(--mat-sys-primary);
+}
+
+.brand-sub {
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--mat-sys-on-surface-variant);
+}
+
+.theme-toggle {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--lp-radius-sm);
+  border: 1px solid var(--mat-sys-outline-variant);
+  background: var(--mat-sys-surface-container-low);
+  color: var(--mat-sys-on-surface-variant);
+  cursor: pointer;
+  transition:
+    color var(--lp-dur-2) var(--lp-ease),
+    background var(--lp-dur-2) var(--lp-ease),
+    border-color var(--lp-dur-2) var(--lp-ease);
+
+  &:hover {
+    color: var(--mat-sys-primary);
+    border-color: var(--mat-sys-primary);
+    background: var(--mat-sys-primary-container);
+  }
+
+  svg {
+    display: block;
+  }
+}
+
+@media (max-width: 480px) {
+  .bar {
+    padding: 0.6rem var(--lp-space-4);
+  }
+  .brand-sub {
+    display: none;
+  }
+}

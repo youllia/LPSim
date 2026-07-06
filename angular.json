@@ -31,6 +31,12 @@
               }
             ],
             "styles": [
+              "@fontsource/inter/400.css",
+              "@fontsource/inter/500.css",
+              "@fontsource/inter/600.css",
+              "@fontsource/inter/700.css",
+              "@fontsource/jetbrains-mono/400.css",
+              "@fontsource/jetbrains-mono/600.css",
               "src/styles.scss"
             ]
           },
@@ -39,8 +45,8 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kB",
-                  "maximumError": "1MB"
+                  "maximumWarning": "800kB",
+                  "maximumError": "1.5MB"
                 },
                 {
                   "type": "anyComponentStyle",

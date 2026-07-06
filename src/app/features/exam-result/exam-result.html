@@ -1,46 +1,68 @@
-<mat-card>
-  <mat-card-header>
-    <mat-card-title>Prüfungsergebnis</mat-card-title>
-    <mat-card-subtitle>
-      {{ correctCount() }} von {{ total() }} richtig ({{ percentage() }}%)
-    </mat-card-subtitle>
-  </mat-card-header>
+<section class="score" [attr.data-tone]="tone()">
+  <div class="score-ring" [style.--pct]="percentage()" aria-hidden="true">
+    <span class="score-pct">{{ percentage() }}<small>%</small></span>
+  </div>
+  <div class="score-info">
+    <span class="lp-badge score-badge">Prüfungsergebnis</span>
+    <h1>{{ correctCount() }} von {{ total() }} richtig</h1>
+    <p class="score-sub">
+      @if (tone() === 'ok') {
+        Starke Leistung. Du beherrschst diesen Stoff sicher.
+      } @else if (tone() === 'mid') {
+        Solide, aber da ist noch Luft nach oben. Wiederhole die offenen Punkte.
+      } @else {
+        Noch nicht sicher. Geh die Themen in Ruhe im Lernmodus durch.
+      }
+    </p>
+    <div class="score-actions">
+      <button matButton="filled" (click)="onNewExam()">Neue Prüfung starten</button>
+      <button matButton="outlined" (click)="onRestart()">Themen lernen</button>
+    </div>
+  </div>
+</section>
 
-  <mat-card-content>
-    @if (wrongResults().length > 0) {
-      <h3>Falsche Antworten</h3>
-      @for (r of wrongResults(); track r.question.id) {
-        <div class="wrong-block">
-          <p class="q">{{ r.question.questionText }}</p>
-          <p class="label">Richtige Antwort(en):</p>
-          <ul>
+@if (wrongResults().length > 0) {
+  <div class="lp-section-head">
+    <h2>Falsch beantwortete Fragen</h2>
+    <span class="count">{{ wrongResults().length }} von {{ total() }}</span>
+  </div>
+
+  <div class="wrong-list">
+    @for (r of wrongResults(); track r.question.id) {
+      <article class="wrong-card">
+        <p class="wq">{{ r.question.questionText }}</p>
+
+        <div class="wa-block">
+          <span class="wa-label wa-label--correct">Richtige Antwort(en)</span>
+          <ul class="wa-list wa-list--correct">
             @for (a of r.result.missing; track a.id) {
-              <li class="correct">{{ a.answerText }}</li>
+              <li>{{ a.answerText }}</li>
             }
           </ul>
-          @if (r.result.extra.length > 0) {
-            <p class="label">Du hast fälschlich gewählt:</p>
-            <ul>
+        </div>
+
+        @if (r.result.extra.length > 0) {
+          <div class="wa-block">
+            <span class="wa-label wa-label--wrong">Deine Auswahl</span>
+            <ul class="wa-list wa-list--wrong">
               @for (a of r.result.extra; track a.id) {
-                <li class="wrong">{{ a.answerText }}</li>
+                <li>{{ a.answerText }}</li>
               }
             </ul>
-          }
-        </div>
-      }
-    } @else { 
-      <p>Alle Fragen richtig beantwortet! 🎉</p>
+          </div>
+        }
+      </article>
     }
-  </mat-card-content>
-
-  <mat-card-actions>
-    <button matButton="outlined" (click)="onRestart()">
-      Themen lernen
-    </button>
-    <button matButton="filled" (click)="onNewExam()">
-    Neue Prüfung starten
-  </button>
-
-</mat-card-actions>
-
-</mat-card>
+  </div>
+} @else {
+  <div class="lp-state perfect">
+    <span class="lp-state-icon">
+      <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor"
+           stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M20 6 9 17l-5-5" />
+      </svg>
+    </span>
+    <h3>Alle Fragen richtig beantwortet</h3>
+    <p>Perfekter Durchlauf. Bereit für die echte Prüfung.</p>
+  </div>
+}

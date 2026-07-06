@@ -1,16 +1,26 @@
 <!doctype html>
-<html lang="en">
+<html lang="de">
 
 <head>
   <meta charset="utf-8" />
-  <title>LPSim</title>
+  <title>Lern- und Prüf-Simulator</title>
   <base href="/" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Lern- und Prüf-Simulator für die LPIC-1 Linux-Zertifizierung: im eigenen Tempo lernen oder eine Prüfung simulieren." />
+  <meta name="theme-color" content="#0f766e" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#0b1418" media="(prefers-color-scheme: dark)" />
   <link rel="icon" type="image/x-icon" href="favicon.ico" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet" />
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+  <script>
+    // Apply the stored theme before first paint to avoid a flash of the wrong theme.
+    (function () {
+      try {
+        var t = localStorage.getItem('lpsim-theme');
+        if (t === 'dark' || t === 'light') {
+          document.documentElement.setAttribute('data-theme', t);
+        }
+      } catch (e) {}
+    })();
+  </script>
 </head>
 
 <body>

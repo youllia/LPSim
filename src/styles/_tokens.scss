@@ -1,0 +1,198 @@
+// ============================================================================
+//  LPSim — Design Tokens
+//  OKLCH-based colour system. Teal/emerald brand, amber for the exam context,
+//  green/coral reserved for answer correctness. Neutrals are faintly tinted
+//  toward the brand hue — never pure #000 / #fff.
+//
+//  These mixins override Angular Material's `--mat-sys-*` runtime tokens so
+//  every Material component (card, button, toggle, field, radio, checkbox)
+//  follows the brand in both light and dark themes, plus a private `--lp-*`
+//  layer for our own components.
+// ============================================================================
+
+// Structural tokens — theme-independent (radius, spacing rhythm, motion, type).
+@mixin base {
+  --lp-font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+    system-ui, sans-serif;
+  --lp-font-mono: 'JetBrains Mono', ui-monospace, 'SFMono-Regular', 'Menlo',
+    'Consolas', monospace;
+
+  --lp-radius-xs: 6px;
+  --lp-radius-sm: 10px;
+  --lp-radius-md: 14px;
+  --lp-radius-lg: 20px;
+  --lp-radius-pill: 999px;
+
+  --lp-space-1: 0.25rem;
+  --lp-space-2: 0.5rem;
+  --lp-space-3: 0.75rem;
+  --lp-space-4: 1rem;
+  --lp-space-5: 1.5rem;
+  --lp-space-6: 2rem;
+  --lp-space-7: 3rem;
+
+  --lp-page-max: 1080px;
+  --lp-content-max: 760px;
+
+  // Motion — ease-out, no bounce.
+  --lp-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --lp-ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --lp-dur-1: 120ms;
+  --lp-dur-2: 180ms;
+  --lp-dur-3: 260ms;
+}
+
+// ---------------------------------------------------------------------------
+//  LIGHT
+// ---------------------------------------------------------------------------
+@mixin sys-light {
+  // Brand — teal (distinct from the "correct" green so the two never blur).
+  --mat-sys-primary: oklch(0.54 0.088 194);
+  --mat-sys-on-primary: oklch(0.99 0.01 190);
+  --mat-sys-primary-container: oklch(0.92 0.045 190);
+  --mat-sys-on-primary-container: oklch(0.34 0.06 195);
+  --mat-sys-inverse-primary: oklch(0.78 0.1 190);
+  --mat-sys-surface-tint: var(--mat-sys-primary);
+
+  // Secondary — muted teal-slate for quieter accents.
+  --mat-sys-secondary: oklch(0.5 0.03 205);
+  --mat-sys-on-secondary: oklch(0.99 0.01 200);
+  --mat-sys-secondary-container: oklch(0.93 0.018 200);
+  --mat-sys-on-secondary-container: oklch(0.35 0.03 205);
+
+  // Tertiary — amber (the exam / timed context).
+  --mat-sys-tertiary: oklch(0.66 0.13 66);
+  --mat-sys-on-tertiary: oklch(0.99 0.01 80);
+  --mat-sys-tertiary-container: oklch(0.91 0.06 72);
+  --mat-sys-on-tertiary-container: oklch(0.38 0.08 60);
+
+  // Error — coral (wrong answers, destructive).
+  --mat-sys-error: oklch(0.57 0.185 24);
+  --mat-sys-on-error: oklch(0.99 0.01 30);
+  --mat-sys-error-container: oklch(0.92 0.05 25);
+  --mat-sys-on-error-container: oklch(0.4 0.13 26);
+
+  // Neutrals — faint teal tint.
+  --mat-sys-background: oklch(0.987 0.004 195);
+  --mat-sys-on-background: oklch(0.24 0.018 210);
+  --mat-sys-surface: oklch(0.993 0.003 195);
+  --mat-sys-on-surface: oklch(0.24 0.018 210);
+  --mat-sys-surface-variant: oklch(0.93 0.008 200);
+  --mat-sys-on-surface-variant: oklch(0.47 0.015 205);
+  --mat-sys-surface-dim: oklch(0.93 0.006 195);
+  --mat-sys-surface-bright: oklch(0.995 0.003 195);
+  --mat-sys-surface-container-lowest: oklch(1 0 0);
+  --mat-sys-surface-container-low: oklch(0.982 0.004 195);
+  --mat-sys-surface-container: oklch(0.972 0.005 195);
+  --mat-sys-surface-container-high: oklch(0.958 0.006 195);
+  --mat-sys-surface-container-highest: oklch(0.944 0.007 195);
+
+  --mat-sys-outline: oklch(0.74 0.012 205);
+  --mat-sys-outline-variant: oklch(0.88 0.009 200);
+
+  --mat-sys-inverse-surface: oklch(0.27 0.015 210);
+  --mat-sys-inverse-on-surface: oklch(0.96 0.005 195);
+
+  --mat-sys-shadow: oklch(0.2 0.03 210);
+  --mat-sys-scrim: oklch(0.15 0.02 210);
+
+  // Private semantic layer.
+  --lp-success: oklch(0.56 0.135 150);
+  --lp-on-success: oklch(0.99 0.01 150);
+  --lp-success-container: oklch(0.93 0.06 150);
+  --lp-on-success-container: oklch(0.36 0.09 150);
+
+  --lp-warn: var(--mat-sys-tertiary);
+  --lp-warn-container: var(--mat-sys-tertiary-container);
+  --lp-on-warn-container: var(--mat-sys-on-tertiary-container);
+
+  --lp-danger: var(--mat-sys-error);
+  --lp-danger-container: var(--mat-sys-error-container);
+  --lp-on-danger-container: var(--mat-sys-on-error-container);
+
+  // Code / command surface.
+  --lp-code-surface: oklch(0.955 0.008 200);
+  --lp-code-on-surface: oklch(0.32 0.04 210);
+  --lp-code-border: oklch(0.9 0.01 200);
+
+  // Elevation.
+  --lp-shadow-sm: 0 1px 2px oklch(0.2 0.03 210 / 0.06),
+    0 1px 1px oklch(0.2 0.03 210 / 0.04);
+  --lp-shadow-md: 0 4px 12px oklch(0.2 0.03 210 / 0.08),
+    0 2px 4px oklch(0.2 0.03 210 / 0.05);
+  --lp-shadow-lg: 0 14px 34px oklch(0.2 0.03 210 / 0.12),
+    0 4px 10px oklch(0.2 0.03 210 / 0.06);
+  --lp-ring: 0 0 0 3px oklch(0.54 0.088 194 / 0.28);
+}
+
+// ---------------------------------------------------------------------------
+//  DARK
+// ---------------------------------------------------------------------------
+@mixin sys-dark {
+  --mat-sys-primary: oklch(0.8 0.1 190);
+  --mat-sys-on-primary: oklch(0.24 0.04 205);
+  --mat-sys-primary-container: oklch(0.4 0.06 195);
+  --mat-sys-on-primary-container: oklch(0.9 0.08 188);
+  --mat-sys-inverse-primary: oklch(0.54 0.088 194);
+  --mat-sys-surface-tint: var(--mat-sys-primary);
+
+  --mat-sys-secondary: oklch(0.78 0.03 200);
+  --mat-sys-on-secondary: oklch(0.25 0.02 205);
+  --mat-sys-secondary-container: oklch(0.36 0.025 205);
+  --mat-sys-on-secondary-container: oklch(0.9 0.02 200);
+
+  --mat-sys-tertiary: oklch(0.82 0.12 74);
+  --mat-sys-on-tertiary: oklch(0.28 0.06 60);
+  --mat-sys-tertiary-container: oklch(0.44 0.08 66);
+  --mat-sys-on-tertiary-container: oklch(0.93 0.07 78);
+
+  --mat-sys-error: oklch(0.72 0.16 24);
+  --mat-sys-on-error: oklch(0.24 0.06 25);
+  --mat-sys-error-container: oklch(0.4 0.12 24);
+  --mat-sys-on-error-container: oklch(0.92 0.06 28);
+
+  --mat-sys-background: oklch(0.185 0.012 210);
+  --mat-sys-on-background: oklch(0.92 0.008 195);
+  --mat-sys-surface: oklch(0.2 0.013 210);
+  --mat-sys-on-surface: oklch(0.92 0.008 195);
+  --mat-sys-surface-variant: oklch(0.3 0.014 205);
+  --mat-sys-on-surface-variant: oklch(0.74 0.014 195);
+  --mat-sys-surface-dim: oklch(0.185 0.012 210);
+  --mat-sys-surface-bright: oklch(0.31 0.014 208);
+  --mat-sys-surface-container-lowest: oklch(0.16 0.011 210);
+  --mat-sys-surface-container-low: oklch(0.22 0.013 210);
+  --mat-sys-surface-container: oklch(0.24 0.014 210);
+  --mat-sys-surface-container-high: oklch(0.275 0.015 208);
+  --mat-sys-surface-container-highest: oklch(0.31 0.016 208);
+
+  --mat-sys-outline: oklch(0.5 0.016 200);
+  --mat-sys-outline-variant: oklch(0.34 0.013 208);
+
+  --mat-sys-inverse-surface: oklch(0.92 0.008 195);
+  --mat-sys-inverse-on-surface: oklch(0.24 0.014 210);
+
+  --mat-sys-shadow: oklch(0 0 0);
+  --mat-sys-scrim: oklch(0 0 0);
+
+  --lp-success: oklch(0.75 0.13 150);
+  --lp-on-success: oklch(0.24 0.05 150);
+  --lp-success-container: oklch(0.4 0.08 150);
+  --lp-on-success-container: oklch(0.9 0.09 150);
+
+  --lp-warn: var(--mat-sys-tertiary);
+  --lp-warn-container: var(--mat-sys-tertiary-container);
+  --lp-on-warn-container: var(--mat-sys-on-tertiary-container);
+
+  --lp-danger: var(--mat-sys-error);
+  --lp-danger-container: var(--mat-sys-error-container);
+  --lp-on-danger-container: var(--mat-sys-on-error-container);
+
+  --lp-code-surface: oklch(0.26 0.015 210);
+  --lp-code-on-surface: oklch(0.86 0.02 190);
+  --lp-code-border: oklch(0.34 0.014 208);
+
+  --lp-shadow-sm: 0 1px 2px oklch(0 0 0 / 0.4);
+  --lp-shadow-md: 0 6px 16px oklch(0 0 0 / 0.45), 0 2px 5px oklch(0 0 0 / 0.35);
+  --lp-shadow-lg: 0 18px 40px oklch(0 0 0 / 0.55), 0 6px 14px oklch(0 0 0 / 0.4);
+  --lp-ring: 0 0 0 3px oklch(0.8 0.1 190 / 0.35);
+}

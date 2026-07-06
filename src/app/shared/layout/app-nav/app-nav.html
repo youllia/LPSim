@@ -1,8 +1,16 @@
-<nav>
-  <mat-toolbar>
-    <a matButton="outlined" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" ariaCurrentWhenActive="page">Kataloge</a>
-    <a matButton="outlined" routerLink="/anleitung" routerLinkActive="active" ariaCurrentWhenActive="page">Anleitung</a>
-    <span class="spacer"></span>
+<nav class="app-nav" aria-label="Hauptnavigation">
+  <div class="bar">
+    <div class="tabs">
+      <a class="tab" routerLink="/" routerLinkActive="active"
+         [routerLinkActiveOptions]="{ exact: true }" ariaCurrentWhenActive="page">
+        Kataloge
+      </a>
+      <a class="tab" routerLink="/anleitung" routerLinkActive="active"
+         ariaCurrentWhenActive="page">
+        Anleitung
+      </a>
+    </div>
+
     <app-mode-select />
-  </mat-toolbar>
+  </div>
 </nav>

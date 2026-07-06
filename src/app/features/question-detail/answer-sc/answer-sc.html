@@ -1,11 +1,9 @@
-<mat-radio-group
-  [value]="selectedId()"
-  (change)="select.emit($event.value)">
+<mat-radio-group class="opt-group" [value]="selectedId()"
+    (change)="select.emit($event.value)">
   @for (a of question().answers; track a.id) {
-    <mat-radio-button
-      [value]="a.id"
-      [class.correct-answer]="checked() && a.isCorrect"
-      [class.wrong-answer]="checked() && !a.isCorrect && selectedId() === a.id">
+    <mat-radio-button class="opt" [value]="a.id"
+      [class.opt--correct]="checked() && a.isCorrect"
+      [class.opt--wrong]="checked() && !a.isCorrect && selectedId() === a.id">
       {{ a.answerText }}
     </mat-radio-button>
   }

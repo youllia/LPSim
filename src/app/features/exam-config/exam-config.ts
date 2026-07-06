@@ -1,9 +1,8 @@
 import { Component, computed, inject, signal } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { firstValueFrom } from 'rxjs';
 import { MatButtonModule } from '@angular/material/button';
-import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -15,11 +14,10 @@ import { API_URLS } from '../../shared/config/api.token';
 import { Catalog } from '../../shared/models/catalog';
 import { Question } from '../../shared/models/question';
 import { shuffle } from '../../shared/utils/shuffle';
-import { MatSelectModule } from '@angular/material/select';
 
 @Component({
   selector: 'app-exam-config',
-  imports: [MatButtonModule, MatCardModule, MatSelectModule, MatFormFieldModule, MatInputModule, MatCheckboxModule],
+  imports: [MatButtonModule, MatFormFieldModule, MatInputModule, MatCheckboxModule, RouterLink],
   templateUrl: './exam-config.html',
   styleUrl: './exam-config.scss',
 })

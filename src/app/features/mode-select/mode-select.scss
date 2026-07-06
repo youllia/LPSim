@@ -1,0 +1,51 @@
+:host {
+  display: inline-block;
+}
+
+.mode-toggle {
+  border: 1px solid var(--mat-sys-outline-variant);
+}
+
+.mode-inner {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-weight: 600;
+}
+
+// Colour-code the two modes: learning is calm teal, exam is amber (timed).
+:host ::ng-deep {
+  .mat-button-toggle {
+    color: var(--mat-sys-on-surface-variant);
+    background: transparent;
+  }
+
+  .mat-button-toggle-button {
+    height: 40px;
+  }
+
+  .mat-button-toggle-checked {
+    background: var(--mat-sys-primary);
+    color: var(--mat-sys-on-primary);
+  }
+
+  .m-pruefung.mat-button-toggle-checked {
+    background: var(--mat-sys-tertiary);
+    color: var(--mat-sys-on-tertiary);
+  }
+
+  .mat-button-toggle-label-content {
+    line-height: 40px;
+    padding: 0 1rem;
+  }
+}
+
+@media (max-width: 600px) {
+  :host,
+  .mode-toggle {
+    width: 100%;
+  }
+  :host ::ng-deep .mat-button-toggle {
+    flex: 1;
+  }
+}

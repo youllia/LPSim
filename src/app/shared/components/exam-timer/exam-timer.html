@@ -1,5 +1,11 @@
 @if (isActive()) {
-  <div class="timer" role="timer" aria-live="polite">
-    ⏱️ {{ formatted() }}
+  <div class="exam-timer" [class.exam-timer--low]="isLow()"
+       role="timer" aria-live="polite" aria-label="Verbleibende Zeit">
+    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor"
+         stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <circle cx="12" cy="13" r="8" />
+      <path d="M12 9v4l2.5 2.5M9 2h6" />
+    </svg>
+    <span class="et-time">{{ formatted() }}</span>
   </div>
 }

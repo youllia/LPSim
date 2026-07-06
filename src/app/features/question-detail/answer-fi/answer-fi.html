@@ -1,11 +1,29 @@
-<mat-form-field
-  [class.correct]="checked() && isCorrect()"
-  [class.wrong]="checked() && !isCorrect()">
-  <input matInput
-    [value]="userInput()"
-    (input)="textChange.emit($any($event.target).value)"
-    placeholder="Antwort eingeben"
-    aria-label="Antwort" />
-</mat-form-field>
-
-
+<div class="fi" [class.fi--correct]="checked() && isCorrect()"
+     [class.fi--wrong]="checked() && !isCorrect()">
+  <label class="fi-label" for="fi-input">Deine Antwort</label>
+  <div class="fi-control">
+    <span class="fi-prompt" aria-hidden="true">&gt;_</span>
+    <input id="fi-input" class="fi-input" type="text"
+      [value]="userInput()"
+      (input)="textChange.emit($any($event.target).value)"
+      [readonly]="checked()"
+      placeholder="z. B. ein Kommando oder ein Pfad"
+      autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"
+      aria-label="Antwort eingeben" />
+    @if (checked()) {
+      <span class="fi-icon" aria-hidden="true">
+        @if (isCorrect()) {
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor"
+               stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20 6 9 17l-5-5" />
+          </svg>
+        } @else {
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor"
+               stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M18 6 6 18M6 6l12 12" />
+          </svg>
+        }
+      </span>
+    }
+  </div>
+</div>

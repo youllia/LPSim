@@ -1,10 +1,11 @@
 import { Component, inject, input } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { QuestionStore } from '../../shared/services/question-store';
 import { QuestionCard } from '../../shared/components/question-card/question-card';
 
 @Component({
   selector: 'app-question-select',
-  imports: [QuestionCard],
+  imports: [QuestionCard, RouterLink],
   templateUrl: './question-select.html',
   styleUrl: './question-select.scss',
 })

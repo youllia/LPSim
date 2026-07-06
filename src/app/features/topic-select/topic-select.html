@@ -1,10 +1,70 @@
-<section class="intro">
-  <h1>Lern- und Prüf-Simulator</h1>
-  <p>Wähle einen Themenbereich, um zu beginnen.</p>
+<section class="page-hero">
+  <span class="lp-badge">LPIC-1 · Linux-Zertifizierung</span>
+  <h1>Im eigenen Tempo lernen, sicher in die Prüfung.</h1>
+  <p class="hero-lead">
+    Wähle einen Themenbereich und arbeite die Fragenkataloge durch. Im Lernmodus
+    ohne Zeitdruck, in der Prüfungssimulation unter realen Bedingungen.
+  </p>
+  <div class="hero-modes">
+    <span class="mode-chip mode-chip--learn">
+      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor"
+           stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M4 5.5A1.5 1.5 0 0 1 5.5 4H11v15H5.5A1.5 1.5 0 0 1 4 17.5z" />
+        <path d="M20 5.5A1.5 1.5 0 0 0 18.5 4H13v15h5.5a1.5 1.5 0 0 0 1.5-1.5z" />
+      </svg>
+      Lernmodus, ohne Zeitdruck
+    </span>
+    <span class="mode-chip mode-chip--exam">
+      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor"
+           stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <circle cx="12" cy="13" r="8" />
+        <path d="M12 9v4l2.5 2.5M9 2h6" />
+      </svg>
+      Prüfung, mit Timer
+    </span>
+  </div>
 </section>
 
-<section class="topic-grid">
-  @for (topic of topics.value(); track topic.id) {
-    <app-topic-card [topic]="topic" />
+<div class="lp-section-head">
+  <h2>Themenbereiche</h2>
+  @if (topics.hasValue() && topics.value().length) {
+    <span class="count">{{ topics.value().length }} verfügbar</span>
   }
-</section>
+</div>
+
+@if (topics.error()) {
+  <div class="lp-state" data-tone="error" role="alert">
+    <span class="lp-state-icon">
+      <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor"
+           stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M12 9v4M12 17h.01" />
+        <path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z" />
+      </svg>
+    </span>
+    <h3>Themen konnten nicht geladen werden</h3>
+    <p>Läuft die Web-API? Starte sie mit <code>npm run api</code> und lade die Seite neu.</p>
+  </div>
+} @else if (topics.isLoading()) {
+  <section class="topic-grid" aria-busy="true">
+    @for (i of [1, 2, 3, 4]; track i) {
+      <div class="lp-skeleton topic-skeleton"></div>
+    }
+  </section>
+} @else if (topics.value().length === 0) {
+  <div class="lp-state">
+    <span class="lp-state-icon">
+      <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor"
+           stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+      </svg>
+    </span>
+    <h3>Noch keine Themenbereiche</h3>
+    <p>Sobald Kataloge in der API hinterlegt sind, erscheinen sie hier.</p>
+  </div>
+} @else {
+  <section class="topic-grid">
+    @for (topic of topics.value(); track topic.id) {
+      <app-topic-card [topic]="topic" />
+    }
+  </section>
+}
