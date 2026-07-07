@@ -1,5 +1,15 @@
+<!-- <nav class="lp-crumbs" aria-label="Brotkrumen">
+  <a routerLink="/">Themenbereiche</a>
+  <span class="sep" aria-hidden="true">/</span>
+  <span class="current">Fragen</span>
+</nav> -->
+
 <nav class="lp-crumbs" aria-label="Brotkrumen">
   <a routerLink="/">Themenbereiche</a>
+  @if (catalog.hasValue() && catalog.value(); as cat) {
+    <span class="sep" aria-hidden="true">/</span>
+    <a [routerLink]="['/topics', cat.topicId, 'catalogs']">{{cat.name}}</a>
+  }
   <span class="sep" aria-hidden="true">/</span>
   <span class="current">Fragen</span>
 </nav>

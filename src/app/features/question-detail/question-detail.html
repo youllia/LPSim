@@ -1,4 +1,4 @@
-@if (mode.mode() !== 'pruefung') {
+<!-- @if (mode.mode() !== 'pruefung') {
   <nav class="lp-crumbs" aria-label="Brotkrumen">
     <a routerLink="/">Themenbereiche</a>
     <span class="sep" aria-hidden="true">/</span>
@@ -6,7 +6,22 @@
     <span class="sep" aria-hidden="true">/</span>
     <span class="current">Frage {{ questionIndex() }}</span>
   </nav>
+} -->
+
+@if (mode.mode() !== 'pruefung') {
+  <nav class="lp-crumbs" aria-label="Brotkrumen">
+    <a routerLink="/">Themenbereiche</a>
+    @if (catalog.hasValue() && catalog.value(); as cat) {
+      <span class="sep" aria-hidden="true">/</span>
+      <a [routerLink]="['/topics', cat.topicId, 'catalogs']">Kataloge</a>
+    }
+    <span class="sep" aria-hidden="true">/</span>
+    <a [routerLink]="['/catalogs', catalogId(), 'questions']">Fragen</a>
+    <span class="sep" aria-hidden="true">/</span>
+    <span class="current">Frage {{ questionIndex() }}</span>
+  </nav>
 }
+
 
 @if (questions.error()) {
   <div class="lp-state" data-tone="error" role="alert">
