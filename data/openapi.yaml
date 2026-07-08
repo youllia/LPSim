@@ -1,0 +1,222 @@
+openapi: 3.0.3
+info:
+  title: LPSim REST API
+  description: |
+    JSON-Server backend for Lern- und Prüf-Simulator.
+    Read-only API for Topics, Catalogs and Questions of LPIC-1.
+  version: 1.0.0
+  license:
+    name: Unlicensed
+    url: https://opensource.org/licenses/MIT
+  contact:
+    name: Iulia Tashkaeva & Walia Adibi
+    url: https://github.com/youllia/LPSim
+
+servers:
+  - url: http://localhost:3000
+    description: JSON-Server (Entwicklung)
+
+security: []
+
+paths:
+  /topics:
+    get:
+      summary: Alle Themen abrufen
+      operationId: getTopics
+      tags: [Topics]
+      responses:
+        '200':
+          description: Liste aller Themenbereiche
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Topic'
+        '500':
+          description: Interner Serverfehler
+  
+  /topics/{id}:
+    get:
+      summary: Einzelnes Thema abrufen
+      operationId: getTopicById
+      tags: [Topics]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Themendetails
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Topic'
+        '404':
+          description: Thema nicht gefunden
+
+  /catalogs:
+    get:
+      summary: Kataloge abrufen (optional per Thema gefiltert)
+      operationId: getCatalogs
+      tags: [Catalogs]
+      parameters:
+        - name: topicId
+          in: query
+          required: false
+          schema:
+            type: integer
+          description: Filter — nur Kataloge zu einem Thema
+      responses:
+        '200':
+          description: Liste der Kataloge
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Catalog'
+        '500':
+          description: Interner Serverfehler
+
+  /catalogs/{id}:
+    get:
+      summary: Einzelnen Katalog abrufen
+      operationId: getCatalogById
+      tags: [Catalogs]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Katalogdetails
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Catalog'
+        '404':
+          description: Katalog nicht gefunden
+
+  /questions:
+    get:
+      summary: Fragen abrufen (optional per Katalog gefiltert)
+      operationId: getQuestions
+      tags: [Questions]
+      parameters:
+        - name: catalogId
+          in: query
+          required: false
+          schema:
+            type: integer
+          description: Filter — nur Fragen zu einem Katalog
+      responses:
+        '200':
+          description: Liste der Fragen
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Question'
+        '500':
+          description: Interner Serverfehler
+
+  /questions/{id}:
+    get:
+      summary: Einzelne Frage abrufen
+      operationId: getQuestionById
+      tags: [Questions]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Fragendetails
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Question'
+        '404':
+          description: Frage nicht gefunden
+
+components:
+  schemas:
+    Topic:
+      type: object
+      required: [id, name]
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: "LPIC-1 Exam 101 (Linux Fundamentals)"
+        apiUrl:
+          type: string
+          nullable: true
+          description: Optional — externer API-Endpunkt für Multi-Backend
+          
+    Catalog:
+      type: object
+      required: [id, topicId, name, questionCount]
+      properties:
+        id:
+          type: integer
+          example: 3
+        topicId:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: "System Architecture"
+        questionCount:
+          type: integer
+          example: 12
+
+    Question:
+      type: object
+      required: [id, catalogId, type, questionText, answers]
+      properties:
+        id:
+          type: integer
+          example: 42
+        catalogId:
+          type: integer
+          example: 3
+        type:
+          type: string
+          enum: [sc, mc, fi]
+          description: |
+            Fragentyp — Single Choice (sc), Multiple Choice (mc), Fill-In (fi)
+        questionText:
+          type: string
+          example: "Which command displays the current runlevel?"
+        answers:
+          type: array
+          items:
+            $ref: '#/components/schemas/Answer'
+        hint:
+          type: string
+          example: "System Architecture — Boot Process"
+
+    Answer:
+      type: object
+      required: [id, answerText, isCorrect]
+      properties:
+        id:
+          type: integer
+          example: 101
+        answerText:
+          type: string
+          example: "runlevel"
+        isCorrect:
+          type: boolean
+          example: true
