@@ -113,6 +113,18 @@
   border: 1px solid var(--mat-sys-outline-variant);
 }
 
+.wrong-card {
+  &.unanswered {
+    //border-left-color: #ff9800;   // оранжевый вместо красного
+    //background: #fff3e0;
+  }
+
+  .warn {
+    color: #e65100;
+    font-weight: 600;
+  }
+}
+
 .wq {
   margin: 0 0 0.9rem;
   font-weight: 600;
@@ -123,7 +135,7 @@
   margin-top: 0.65rem;
 }
 
-.wa-label {
+.wa-label  &.unanswered {
   display: inline-block;
   margin-bottom: 0.3rem;
   font-size: 0.72rem;

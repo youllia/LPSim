@@ -4,7 +4,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { ExamSessionState } from '../../shared/services/exam-session-state';
 import { AnswerCheckService } from '../../shared/services/answer-check';
 import { ModeState } from '../../shared/services/mode-state';
-
+import { AnswerInput } from '../../shared/services/answer-check';
 
 @Component({
   selector: 'app-exam-result',
@@ -38,6 +38,12 @@ export class ExamResult {
   protected wrongResults = computed(() =>
     this.results().filter(r => !r.result.isCorrect)
   );
+
+  protected isUnanswered(input: AnswerInput): boolean {
+    return input.selectedId === null
+    && input.selectedIds.length === 0
+    && input.userInput.trim() === '';
+   }
 
   protected percentage = computed(() => {
     const total = this.total();

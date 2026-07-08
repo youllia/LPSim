@@ -41,7 +41,14 @@
           </ul>
         </div>
 
-        @if (r.result.extra.length > 0) {
+        @if (isUnanswered(r.input)) {
+          <div class="wa-block">
+            <span class="wa-label wa-label--wrong">Deine Auswahl</span>
+            <ul class="wa-list wa-list--wrong">
+              <li>⚠ Nicht beantwortet — als falsch gewertet</li>
+            </ul>
+          </div>
+        } @else if (r.result.extra.length > 0) {
           <div class="wa-block">
             <span class="wa-label wa-label--wrong">Deine Auswahl</span>
             <ul class="wa-list wa-list--wrong">
