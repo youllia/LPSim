@@ -34,6 +34,14 @@
 
   .finish-btn {
     margin-left: 0;
-    order: -1;
+    //order: -1;
+  }
+
+  .next:not(:disabled) {
+    background: var(--mat-sys-secondary-container, #d7e3f4);
+    color: var(--mat-sys-on-secondary-container, #101c2c);
+    font-weight: 500;
+    //border-color: transparent;
+    order: -2;
   }
 }
