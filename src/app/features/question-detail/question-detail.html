@@ -1,16 +1,7 @@
-<!-- @if (mode.mode() !== 'pruefung') {
-  <nav class="lp-crumbs" aria-label="Brotkrumen">
-    <a routerLink="/">Themenbereiche</a>
-    <span class="sep" aria-hidden="true">/</span>
-    <a [routerLink]="['/catalogs', catalogId(), 'questions']">Fragen</a>
-    <span class="sep" aria-hidden="true">/</span>
-    <span class="current">Frage {{ questionIndex() }}</span>
-  </nav>
-}
- -->
 @if (mode.mode() !== 'pruefung') {
  <app-breadcrumbs />
 }
+
 @if (questions.error()) {
   <div class="lp-state" data-tone="error" role="alert">
     <span class="lp-state-icon">
