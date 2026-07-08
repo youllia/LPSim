@@ -11,7 +11,7 @@ import { ExamSessionState } from '../../shared/services/exam-session-state';
 import { ExamTimer } from '../../shared/components/exam-timer/exam-timer';
 import { QuestionTypeLabelPipe } from '../../shared/pipes/question-type-label.pipe';
 import { ActiveStateStore } from '../../shared/services/active-state-store';
-import { Breadcrumbs } from '../../shared/components/breadcrumbs/breadcrumbs/breadcrumbs';
+import { Breadcrumbs } from '../../shared/components/breadcrumbs/breadcrumbs';
 import { CatalogStore } from '../../shared/services/catalog-store';
 
 

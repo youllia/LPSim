@@ -2,7 +2,7 @@ import { Component, effect, inject, input } from '@angular/core';
 import { CatalogStore } from '../../shared/services/catalog-store';
 import { CatalogCard } from '../../shared/components/catalog-card/catalog-card';
 import { ActiveStateStore } from '../../shared/services/active-state-store';
-import { Breadcrumbs } from '../../shared/components/breadcrumbs/breadcrumbs/breadcrumbs';
+import { Breadcrumbs } from '../../shared/components/breadcrumbs/breadcrumbs';
 
 @Component({
   selector: 'app-catalog-select',

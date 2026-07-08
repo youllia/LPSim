@@ -1,8 +1,8 @@
 import { Component, computed, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { ActiveStateStore } from '../../../services/active-state-store';
-import { CatalogStore } from '../../../services/catalog-store';
-import { TopicStore } from '../../../services/topic-store';
+import { ActiveStateStore } from '../../services/active-state-store';
+import { CatalogStore } from '../../services/catalog-store';
+import { TopicStore } from '../../services/topic-store';
 
 
 interface Crumb {

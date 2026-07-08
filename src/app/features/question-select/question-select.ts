@@ -2,7 +2,7 @@ import { Component, effect, inject, input } from '@angular/core';
 import { QuestionStore } from '../../shared/services/question-store';
 import { QuestionCard } from '../../shared/components/question-card/question-card';
 import { ActiveStateStore } from '../../shared/services/active-state-store';
-import { Breadcrumbs } from '../../shared/components/breadcrumbs/breadcrumbs/breadcrumbs';
+import { Breadcrumbs } from '../../shared/components/breadcrumbs/breadcrumbs';
 import { CatalogStore } from '../../shared/services/catalog-store';
 
 @Component({
