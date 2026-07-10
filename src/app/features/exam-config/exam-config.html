@@ -1,53 +1,89 @@
+<nav class="lp-crumbs" aria-label="Brotkrumen">
+  <a routerLink="/">Themenbereiche</a>
+  <span class="sep" aria-hidden="true">/</span>
+  <span class="current">Prüfung konfigurieren</span>
+</nav>
+
+<header class="ec-head">
+  <span class="lp-badge ec-badge">
+    <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor"
+         stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <circle cx="12" cy="13" r="8" /><path d="M12 9v4l2.5 2.5M9 2h6" />
+    </svg>
+    Prüfungssimulation
+  </span>
+  <h1>Prüfung konfigurieren</h1>
+  <p class="ec-lead">
+    Stelle deine Prüfung zusammen. Während des Durchlaufs gibt es kein Feedback,
+    die Auswertung erscheint erst am Ende.
+  </p>
+</header>
+
 <div class="exam-config">
-  <mat-card class="catalog-panel">
-    <mat-card-header>
-      <mat-card-title>Kataloge auswählen</mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
+  <section class="panel catalog-panel">
+    <div class="panel-head">
+      <h2>Kataloge</h2>
+      <span class="panel-hint">{{ selectedCatalogIds().size }} ausgewählt</span>
+    </div>
+
+    @if (catalogs.isLoading()) {
+      <div class="lp-skeleton" style="height: 220px"></div>
+    } @else {
       @for (topic of topics.value(); track topic.id) {
-        <h3>{{ topic.name }}</h3>
-        @for (cat of catalogsFor(topic.id) ?? []; track cat.id) {
-          <mat-checkbox
-            [checked]="isSelected(cat.id)"
-            (change)="toggleCatalog(cat.id, $event.checked)">
-            {{ cat.name }} ({{ cat.questionCount }})
-          </mat-checkbox>
-        }
+        <div class="topic-group">
+          <h3 class="topic-group-title">{{ topic.name }}</h3>
+          <div class="opt-group">
+            @for (cat of catalogsFor(topic.id); track cat.id) {
+              <mat-checkbox class="opt"
+                [checked]="isSelected(cat.id)"
+                (change)="toggleCatalog(cat.id, $event.checked)">
+                {{ cat.name }}
+                <span class="cat-count">{{ cat.questionCount }}</span>
+              </mat-checkbox>
+            }
+          </div>
+        </div>
       }
-    </mat-card-content>
-  </mat-card>
+    }
+  </section>
 
-  <mat-card class="settings-panel">
-    <mat-card-header>
-      <mat-card-title>Einstellungen</mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-      <mat-form-field appearance="fill">
-        <mat-label>Anzahl der Fragen (leer = alle)</mat-label>
-        <input matInput type="number"
-               [value]="anzahl() ?? ''"
-               (input)="anzahl.set(+$any($event.target).value || null)"
-               min="1" />
-      </mat-form-field>
+  <aside class="panel settings-panel">
+    <div class="panel-head">
+      <h2>Einstellungen</h2>
+    </div>
 
-      <mat-form-field appearance="fill">
-        <mat-label>Dauer (Minuten)</mat-label>
-        <input matInput type="number"
-               [value]="durationMinutes()"
-               (input)="durationMinutes.set(+$any($event.target).value)"
-               min="10" max="180" />
-      </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Anzahl der Fragen</mat-label>
+      <input matInput type="number" min="1"
+             [value]="anzahl() ?? ''"
+             (input)="anzahl.set(+$any($event.target).value || null)" />
+      <mat-hint>Leer lassen für alle Fragen</mat-hint>
+    </mat-form-field>
 
-      <mat-checkbox [checked]="shuffleQuestions()" (change)="shuffleQuestions.set($event.checked)">
-        Zufällige Reihenfolge
-      </mat-checkbox>
-    </mat-card-content>
+    <mat-form-field appearance="outline">
+      <mat-label>Dauer in Minuten</mat-label>
+      <input matInput type="number" min="1" max="240"
+             [value]="durationMinutes()"
+             (input)="durationMinutes.set(+$any($event.target).value)" />
+      <mat-hint>Standard: 1 Minute pro Frage</mat-hint>
+    </mat-form-field>
 
-    <mat-card-actions>
-      <button matButton="filled" [disabled]="!canStart()" (click)="onStart()">
+    <mat-checkbox class="ec-shuffle"
+      [checked]="shuffleQuestions()"
+      (change)="shuffleQuestions.set($event.checked)">
+      Fragen zufällig anordnen
+    </mat-checkbox>
+
+    <div class="ec-actions">
+      <button matButton="filled" class="start-btn"
+              [disabled]="!canStart()" (click)="onStart()">
         Prüfung starten
       </button>
       <button matButton (click)="onCancel()">Abbrechen</button>
-    </mat-card-actions>
-  </mat-card>
+    </div>
+
+    @if (!canStart()) {
+      <p class="ec-note">Wähle mindestens einen Katalog, um zu starten.</p>
+    }
+  </aside>
 </div>

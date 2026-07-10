@@ -1,0 +1,88 @@
+:host {
+  display: block;
+}
+
+.feedback {
+  --_tone: var(--mat-sys-primary);
+  --_on-tone: var(--mat-sys-on-surface);
+  margin-top: 1.25rem;
+  padding: 1rem 1.15rem;
+  border-radius: var(--lp-radius-md);
+  border: 1px solid color-mix(in oklab, var(--_tone) 40%, var(--mat-sys-outline-variant));
+  background: color-mix(in oklab, var(--_tone) 12%, var(--mat-sys-surface));
+}
+
+.feedback--ok {
+  --_tone: var(--lp-success);
+  --_on-tone: var(--lp-on-success-container);
+}
+
+.feedback--no {
+  --_tone: var(--mat-sys-error);
+  --_on-tone: var(--mat-sys-on-error-container);
+}
+
+.fb-head {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+}
+
+.fb-icon {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: var(--lp-radius-pill);
+  color: var(--mat-sys-on-primary);
+  background: var(--_tone);
+  flex-shrink: 0;
+}
+
+.feedback--ok .fb-icon {
+  color: var(--lp-on-success);
+}
+
+.fb-verdict {
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: var(--_on-tone);
+}
+
+.fb-body {
+  margin-top: 0.75rem;
+}
+
+.fb-label {
+  display: block;
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--mat-sys-on-surface-variant);
+  margin-bottom: 0.35rem;
+}
+
+.fb-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+
+  li {
+    position: relative;
+    padding-left: 1.4rem;
+    line-height: 1.45;
+
+    &::before {
+      content: '✓';
+      position: absolute;
+      left: 0;
+      top: 0;
+      font-weight: 700;
+      color: var(--lp-success);
+    }
+  }
+}

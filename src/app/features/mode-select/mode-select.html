@@ -1,10 +1,24 @@
-<!-- <p> Aktuel: {{ state.mode() }} </p> -->
-
-<mat-button-toggle-group [value]="state.mode()" (change)="onModeChange($event.value)">
-  <mat-button-toggle value="lernen">
-    Lernmodus
+<mat-button-toggle-group class="mode-toggle" [value]="state.mode()"
+    [hideSingleSelectionIndicator]="true"
+    (change)="onModeChange($event.value)" aria-label="Modus wählen">
+  <mat-button-toggle class="m-lernen" value="lernen" aria-label="Lernmodus">
+    <span class="mode-inner">
+      <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor"
+           stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M4 5.5A1.5 1.5 0 0 1 5.5 4H11v15H5.5A1.5 1.5 0 0 1 4 17.5z" />
+        <path d="M20 5.5A1.5 1.5 0 0 0 18.5 4H13v15h5.5a1.5 1.5 0 0 0 1.5-1.5z" />
+      </svg>
+      Lernen
+    </span>
   </mat-button-toggle>
-  <mat-button-toggle value="pruefung">
-    Prüfungssimulation
+  <mat-button-toggle class="m-pruefung" value="pruefung" aria-label="Prüfungssimulation">
+    <span class="mode-inner">
+      <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor"
+           stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <circle cx="12" cy="13" r="8" />
+        <path d="M12 9v4l2.5 2.5M9 2h6" />
+      </svg>
+      Prüfung
+    </span>
   </mat-button-toggle>
 </mat-button-toggle-group>

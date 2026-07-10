@@ -1,0 +1,35 @@
+:host {
+  display: inline-flex;
+}
+
+.exam-timer {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.35rem 0.7rem 0.35rem 0.6rem;
+  border-radius: var(--lp-radius-pill);
+  background: var(--mat-sys-tertiary-container);
+  color: var(--mat-sys-on-tertiary-container);
+  border: 1px solid color-mix(in oklab, var(--mat-sys-tertiary) 40%, transparent);
+  font-variant-numeric: tabular-nums;
+}
+
+.et-time {
+  font-family: var(--lp-font-mono);
+  font-weight: 700;
+  font-size: 0.95rem;
+  letter-spacing: 0.02em;
+}
+
+.exam-timer--low {
+  background: var(--mat-sys-error-container);
+  color: var(--mat-sys-on-error-container);
+  border-color: color-mix(in oklab, var(--mat-sys-error) 55%, transparent);
+  animation: et-pulse 1s var(--lp-ease-in-out) infinite;
+}
+
+@keyframes et-pulse {
+  50% {
+    opacity: 0.6;
+  }
+}

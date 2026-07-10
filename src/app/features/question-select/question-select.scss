@@ -1,13 +1,13 @@
-.intro {
-  padding: 1rem;
-}
-
 .question-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-  padding: 1rem;
 }
 
-p[role="alert"] { color: var(--mat-sys-error); padding: 1rem; }
-p[aria-busy="true"] { color: var(--mat-sys-on-surface-variant); padding: 1rem; }
+.question-skeleton {
+  height: 56px;
+  border-radius: var(--lp-radius-md);
+}

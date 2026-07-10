@@ -1,7 +1,7 @@
-import { Component, inject } from '@angular/core';
-//import { RouterLink, RouterLinkActive } from '@angular/router';
+import { Component, effect, inject } from '@angular/core';
 import { TopicStore } from '../../shared/services/topic-store';
 import { TopicCard } from '../../shared/components/topic-card/topic-card';
+import { ActiveStateStore } from '../../shared/services/active-state-store';
 
 
 @Component({
@@ -12,9 +12,13 @@ import { TopicCard } from '../../shared/components/topic-card/topic-card';
 })
 export class TopicSelect {
   #topicStore = inject(TopicStore);
+  #active = inject(ActiveStateStore);
+
+  constructor() {
+    effect(() => { this.#active.clearAll(); });
+  }
 
   protected topics = this.#topicStore.getAll(); // Fetch all topics from the TopicStore
-
 }
 
 

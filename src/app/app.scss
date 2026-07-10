@@ -1,38 +1,38 @@
-
-app-header,
-app-nav,
-app-footer {
-  display: block;
+:host {
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
 }
 
 main {
-  max-width: 900px;
+  flex: 1 0 auto;
+}
+
+.app-footer {
+  border-top: 1px solid var(--mat-sys-outline-variant);
+  background: var(--mat-sys-surface-container-low);
+  color: var(--mat-sys-on-surface-variant);
+}
+
+.foot {
+  max-width: var(--lp-page-max);
   margin: 0 auto;
-  padding: 1.5rem;
-}
-
-h3 {
-  margin: 0 0 0.5rem;
-  font-size: 1.25rem;
-}
-
-h4 {
-  margin: 0 0 1.5rem;
-  font-weight: 400;
-  font-size: 0.875rem;
-  color: rgba(0, 0, 0, 0.6);
-}
-
-button[matButton] {
-  margin-top: 0.5rem;
-}
-
-.nav {
+  padding: var(--lp-space-5) var(--lp-space-5);
   display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
   justify-content: space-between;
-  gap: 0.75rem;
-  margin-top: 2rem;
-  padding-top: 1rem;
-  border-top: 1px solid rgba(0, 0, 0, 0.08);
+  gap: 0.5rem 1.5rem;
+  font-size: 0.85rem;
 }
 
+.foot-brand {
+  font-weight: 600;
+  color: var(--mat-sys-on-surface);
+}
+
+@media (max-width: 600px) {
+  .foot {
+    padding: var(--lp-space-4) var(--lp-space-4);
+  }
+}

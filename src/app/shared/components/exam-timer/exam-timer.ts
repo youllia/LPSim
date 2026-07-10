@@ -26,6 +26,12 @@ export class ExamTimer {
     this.#exam.startTime() !== null && !this.#exam.submitted()
   );
 
+  // Under a minute left: switch to an urgent visual state.
+  protected isLow = computed(() => {
+    const ms = this.#exam.remainingMs();
+    return ms > 0 && ms <= 60_000;
+  });
+
   constructor() {
     // Tick: update now() / 1 Sec
     effect((onCleanup) => {

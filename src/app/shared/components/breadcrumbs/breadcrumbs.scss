@@ -1,0 +1,28 @@
+.lp-crumbs {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem;
+  margin-bottom: var(--lp-space-4);
+  font-size: 0.85rem;
+  color: var(--mat-sys-on-surface-variant);
+
+  a {
+    color: var(--mat-sys-on-surface-variant);
+    text-decoration: none;
+    border-radius: var(--lp-radius-xs);
+
+    &:hover {
+      color: var(--mat-sys-primary);
+    }
+  }
+
+  .sep {
+    opacity: 0.5;
+  }
+
+  .current {
+    color: var(--mat-sys-on-surface);
+    font-weight: 600;
+  }
+}

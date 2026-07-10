@@ -1,25 +1,125 @@
-.exam-config {
-  display: grid;
-  gap: 1.5rem;
-  grid-template-columns: 1fr;
+.ec-head {
+  max-width: 42rem;
+  margin-bottom: var(--lp-space-6);
 
-  @media (min-width: 800px) {
-    grid-template-columns: 3fr 2fr;
+  h1 {
+    margin: 0.85rem 0 0.6rem;
   }
 }
 
-.catalog-panel,
+.ec-badge {
+  background: var(--mat-sys-tertiary-container);
+  color: var(--mat-sys-on-tertiary-container);
+}
+
+.ec-lead {
+  color: var(--mat-sys-on-surface-variant);
+  margin: 0;
+}
+
+.exam-config {
+  display: grid;
+  gap: var(--lp-space-5);
+  grid-template-columns: 1fr;
+  align-items: start;
+
+  @media (min-width: 820px) {
+    grid-template-columns: 1.5fr 1fr;
+  }
+}
+
+.panel {
+  padding: clamp(1.1rem, 3vw, 1.6rem);
+  border-radius: var(--lp-radius-lg);
+  background: var(--mat-sys-surface);
+  border: 1px solid var(--mat-sys-outline-variant);
+  box-shadow: var(--lp-shadow-sm);
+}
+
 .settings-panel {
-  mat-checkbox {
-    display: block;
-    margin: 0.25rem 0;
+  position: sticky;
+  top: 5.5rem;
+}
+
+.panel-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1rem;
+
+  h2 {
+    margin: 0;
+    font-size: 1.15rem;
   }
-  h3 {
-    margin-top: 1rem;
-    margin-bottom: 0.5rem;
+}
+
+.panel-hint {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--mat-sys-primary);
+}
+
+.topic-group {
+  margin-bottom: 1.25rem;
+
+  &:last-child {
+    margin-bottom: 0;
   }
-  mat-form-field {
-    display: block;
-    margin-bottom: 1rem;
-  }
+}
+
+.topic-group-title {
+  margin: 0 0 0.55rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--mat-sys-on-surface-variant);
+}
+
+// Catalog rows reuse the shared .opt style; push the count to the right.
+.catalog-panel .opt label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.cat-count {
+  margin-left: auto;
+  padding: 0.1rem 0.5rem;
+  border-radius: var(--lp-radius-pill);
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--mat-sys-on-surface-variant);
+  background: var(--mat-sys-surface-container-high);
+}
+
+.settings-panel mat-form-field {
+  display: block;
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+.ec-shuffle {
+  display: block;
+  margin: 0.5rem 0 1.25rem;
+}
+
+.ec-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.start-btn {
+  --mdc-filled-button-container-color: var(--mat-sys-tertiary);
+  --mdc-filled-button-label-text-color: var(--mat-sys-on-tertiary);
+  height: 48px;
+}
+
+.ec-note {
+  margin: 0.85rem 0 0;
+  font-size: 0.85rem;
+  color: var(--mat-sys-on-surface-variant);
+  text-align: center;
 }

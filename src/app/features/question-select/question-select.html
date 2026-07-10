@@ -1,27 +1,48 @@
-<section class="intro">
-  <h2>Fragenliste</h2>
-</section>
+<app-breadcrumbs />
+
+<div class="lp-section-head">
+  <h1>Fragenliste</h1>
+  @if (questions.hasValue() && questions.value().length) {
+    <span class="count">{{ questions.value().length }} Fragen</span>
+  }
+</div>
 
 @if (questions.error()) {
-  <p role="alert">Fragen konnten nicht geladen werden.</p>
-}
-
-@if (questions.isLoading()) {
-  <p aria-busy="true">Lade Fragen…</p>
-}
-
-@if (questions.hasValue()) {
-  @if (questions.value().length === 0) {
-    <p>Keine Fragen in diesem Katalog.</p>
-  } @else {
-    <section class="question-list">
-      <ol>
-        @for (q of questions.value(); track q.id) {
-          <li>
-            <app-question-card [question]="q" [catalogId]="catalogId()" />
-          </li>
-        }
-      </ol>
-    </section>
-  }
+  <div class="lp-state" data-tone="error" role="alert">
+    <span class="lp-state-icon">
+      <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor"
+           stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M12 9v4M12 17h.01" />
+        <path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z" />
+      </svg>
+    </span>
+    <h3>Fragen konnten nicht geladen werden</h3>
+    <p>Prüfe die Verbindung zur Web-API und versuche es erneut.</p>
+  </div>
+} @else if (questions.isLoading()) {
+  <section class="question-list" aria-busy="true">
+    @for (i of [1, 2, 3, 4, 5, 6, 7, 8]; track i) {
+      <div class="lp-skeleton question-skeleton"></div>
+    }
+  </section>
+} @else if (questions.value().length === 0) {
+  <div class="lp-state">
+    <span class="lp-state-icon">
+      <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor"
+           stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M9 11l3 3L22 4" />
+        <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" />
+      </svg>
+    </span>
+    <h3>Keine Fragen in diesem Katalog</h3>
+    <p>Dieser Katalog enthält derzeit keine Fragen.</p>
+  </div>
+} @else {
+  <ol class="question-list">
+    @for (q of questions.value(); track q.id) {
+      <li>
+        <app-question-card [question]="q" [catalogId]="catalogId()" />
+      </li>
+    }
+  </ol>
 }

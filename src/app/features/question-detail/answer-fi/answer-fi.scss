@@ -1,12 +1,88 @@
-mat-form-field {
-  display: block;   // на всю ширину, кнопка снизу
-  margin-bottom: 1rem;
+:host {
+  display: block;
 }
 
-:host.correct input {
-  background-color: #d4edda;
+.fi {
+  --_border: var(--mat-sys-outline);
+  --_accent: var(--mat-sys-primary);
 }
 
-:host.wrong input {
-  background-color: #f8d7da;
+.fi-label {
+  display: block;
+  margin-bottom: 0.4rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--mat-sys-on-surface-variant);
+}
+
+.fi-control {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0 0.85rem;
+  border: 1.5px solid var(--_border);
+  border-radius: var(--lp-radius-md);
+  background: var(--lp-code-surface);
+  transition:
+    border-color var(--lp-dur-2) var(--lp-ease),
+    box-shadow var(--lp-dur-2) var(--lp-ease);
+
+  &:focus-within {
+    border-color: var(--_accent);
+    box-shadow: var(--lp-ring);
+  }
+}
+
+.fi-prompt {
+  font-family: var(--lp-font-mono);
+  font-weight: 700;
+  color: var(--mat-sys-primary);
+  opacity: 0.75;
+  user-select: none;
+}
+
+.fi-input {
+  flex: 1;
+  min-width: 0;
+  padding: 0.85rem 0;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-family: var(--lp-font-mono);
+  font-size: 0.98rem;
+  color: var(--lp-code-on-surface);
+
+  &::placeholder {
+    color: var(--mat-sys-on-surface-variant);
+    opacity: 0.7;
+    font-family: var(--lp-font-sans);
+  }
+}
+
+.fi-icon {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+}
+
+.fi--correct {
+  --_border: var(--lp-success);
+  --_accent: var(--lp-success);
+  .fi-icon {
+    color: var(--lp-success);
+  }
+  .fi-control {
+    background: color-mix(in oklab, var(--lp-success-container) 30%, var(--lp-code-surface));
+  }
+}
+
+.fi--wrong {
+  --_border: var(--mat-sys-error);
+  --_accent: var(--mat-sys-error);
+  .fi-icon {
+    color: var(--mat-sys-error);
+  }
+  .fi-control {
+    background: color-mix(in oklab, var(--mat-sys-error-container) 30%, var(--lp-code-surface));
+  }
 }

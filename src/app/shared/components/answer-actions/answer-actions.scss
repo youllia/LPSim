@@ -1,0 +1,13 @@
+:host {
+  display: block;
+}
+
+button {
+  min-width: 12rem;
+}
+
+@media (max-width: 520px) {
+  button {
+    width: 100%;
+  }
+}

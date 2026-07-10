@@ -1,9 +1,14 @@
-
 <a [routerLink]="['/catalogs', catalogId(), 'questions', question().id]"
-  class="question-card"
-  [attr.data-type]="question().type">
-    <div class="question -card-content">
-      <span>{{ question().questionText }}</span>
-      <span class="sm"> ({{ question().type }}) </span>
-    </div>
+   class="question-card" [attr.data-type]="question().type">
+  <span class="qc-badge" [attr.data-type]="question().type"
+        [title]="question().type | questionTypeLabel">
+    {{ typeShort[question().type] }}
+  </span>
+  <span class="qc-text">{{ question().questionText }}</span>
+  <span class="qc-chevron" aria-hidden="true">
+    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor"
+         stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M9 6l6 6-6 6" />
+    </svg>
+  </span>
 </a>

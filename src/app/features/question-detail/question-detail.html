@@ -1,74 +1,88 @@
+@if (mode.mode() !== 'pruefung') {
+ <app-breadcrumbs />
+}
+
 @if (questions.error()) {
-  <p role="alert">Fragen konnten nicht geladen werden.</p>
-}
-
-@if (questions.isLoading()) {
-  <p aria-busy="true">Lade Fragen…</p>
-}
-
-<mat-card>
-  @if (questions.hasValue()) {
-    @if (question(); as q) {
-
-        <mat-card-header>
-          <mat-card-title>{{ q.questionText }}</mat-card-title>
-
-          <mat-card-subtitle>
-            Frage {{ questionIndex() }} von {{ questionsTotal() }}  |
-            {{ q.hint }} | {{ q.type  | questionTypeLabel }}
-          </mat-card-subtitle>
-        </mat-card-header>
-
-        <mat-card-content>
-
-          @switch (q.type) {
-            @case ('sc') {
-              <app-answer-sc
-                [question]="q"
-                [selectedId]="selectedId()"
-                [checked]="checked()"
-                (select)="selectedId.set($event)" />
-                }
-            @case ('mc') {
-              <app-answer-mc
-                [question]="q"
-                [selectedIds]="selectedIds()"
-                [checked]="checked()"
-                (toggle)="toggleMc($event.id, $event.isChecked)" />
-            }
-            @case ('fi') {
-              <app-answer-fi
-                [question]="q"
-                [userInput]="userInput()"
-                [checked]="checked()"
-                [isCorrect]="isCorrect()"
-                (textChange)="userInput.set($event)" />
-            }
-          }
-          </mat-card-content>
-
-          <mat-card-actions>
-            <app-answer-actions
-              [mode]="mode.mode()"
-              [checked]="checked()"
-              [isCorrect]="isCorrect()"
-              [correctAnswers]="correctAnswers()"
-              (pruefen)="checked.set(true)" />
-          </mat-card-actions>
-
-          <mat-card-actions>
-            <app-question-nav
-              [questions]="questionsForNav()"
-              [catalogId]="catalogId()"
-              [questionId]="questionId()" />
-          </mat-card-actions>
-          }
-
-          @else {
-            <p role="alert">Frage wurde nicht gefunden.</p>
-          }
+  <div class="lp-state" data-tone="error" role="alert">
+    <span class="lp-state-icon">
+      <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor"
+           stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M12 9v4M12 17h.01" />
+        <path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z" />
+      </svg>
+    </span>
+    <h3>Frage konnte nicht geladen werden</h3>
+    <p>Prüfe die Verbindung zur Web-API und versuche es erneut.</p>
+  </div>
+} @else if (questions.isLoading()) {
+  <div class="lp-skeleton qd-skeleton"></div>
+} @else if (question(); as q) {
+  <article class="qd" [class.qd--exam]="mode.mode() === 'pruefung'">
+    <header class="qd-head">
+      <div class="qd-meta">
+        <span class="qd-type" [attr.data-type]="q.type">{{ q.type | questionTypeLabel }}</span>
+        <span class="qd-count">
+          Frage <strong>{{ questionIndex() }}</strong> von {{ questionsTotal() }}
+        </span>
+      </div>
+      @if (mode.mode() === 'pruefung') {
+        <app-exam-timer />
       }
-  </mat-card>
+    </header>
 
+    <div class="qd-progress" role="progressbar"
+         [attr.aria-valuenow]="questionIndex()" aria-valuemin="1"
+         [attr.aria-valuemax]="questionsTotal()">
+      <span class="qd-progress-fill"
+            [style.width.%]="questionsTotal() ? (questionIndex() / questionsTotal()) * 100 : 0"></span>
+    </div>
 
+    <h1 class="qd-question">{{ q.questionText }}</h1>
 
+    @if (q.hint && mode.mode() !== 'pruefung') {
+      <p class="qd-hint">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor"
+             stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M9 18h6M10 22h4M12 2a7 7 0 0 0-4 12.7c.6.5 1 1.3 1 2.1h6c0-.8.4-1.6 1-2.1A7 7 0 0 0 12 2z" />
+        </svg>
+        {{ q.hint }}
+      </p>
+    }
+
+    <div class="qd-answers">
+      @switch (q.type) {
+        @case ('sc') {
+          <app-answer-sc [question]="q" [selectedId]="selectedId()" [checked]="checked()"
+            (select)="selectedId.set($event)" />
+        }
+        @case ('mc') {
+          <app-answer-mc [question]="q" [selectedIds]="selectedIds()" [checked]="checked()"
+            (toggle)="toggleMc($event.id, $event.isChecked)" />
+        }
+        @case ('fi') {
+          <app-answer-fi [question]="q" [userInput]="userInput()" [checked]="checked()"
+            [isCorrect]="isCorrect()" (textChange)="userInput.set($event)" />
+        }
+      }
+    </div>
+
+    <app-answer-actions [mode]="mode.mode()" [checked]="checked()" [isCorrect]="isCorrect()"
+      [correctAnswers]="correctAnswers()" (pruefen)="checked.set(true)" />
+
+    <div class="qd-footer">
+      <app-question-nav [questions]="questionsForNav()" [catalogId]="catalogId()"
+        [questionId]="questionId()" />
+    </div>
+  </article>
+} @else {
+  <div class="lp-state">
+    <span class="lp-state-icon">
+      <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor"
+           stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <circle cx="11" cy="11" r="7" /><path d="M21 21l-4.3-4.3" />
+      </svg>
+    </span>
+    <h3>Frage nicht gefunden</h3>
+    <p>Diese Frage existiert nicht in diesem Katalog.</p>
+  </div>
+}

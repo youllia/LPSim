@@ -1,0 +1,80 @@
+:host {
+  display: block;
+}
+
+.catalog-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--lp-space-4);
+  height: 100%;
+  padding: var(--lp-space-5);
+  border-radius: var(--lp-radius-lg);
+  background: var(--mat-sys-surface);
+  border: 1px solid var(--mat-sys-outline-variant);
+  box-shadow: var(--lp-shadow-sm);
+  text-decoration: none;
+  color: var(--mat-sys-on-surface);
+  transition:
+    transform var(--lp-dur-2) var(--lp-ease),
+    box-shadow var(--lp-dur-2) var(--lp-ease),
+    border-color var(--lp-dur-2) var(--lp-ease);
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--lp-shadow-md);
+    border-color: color-mix(in oklab, var(--mat-sys-primary) 45%, transparent);
+  }
+}
+
+.cc-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.cc-name {
+  font-weight: 700;
+  font-size: 1.05rem;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+}
+
+.cc-arrow {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 30px;
+  height: 30px;
+  border-radius: var(--lp-radius-sm);
+  color: var(--mat-sys-on-surface-variant);
+  background: var(--mat-sys-surface-container-high);
+  transition:
+    transform var(--lp-dur-2) var(--lp-ease),
+    color var(--lp-dur-2) var(--lp-ease),
+    background var(--lp-dur-2) var(--lp-ease);
+}
+
+.catalog-card:hover .cc-arrow {
+  transform: translateX(2px);
+  color: var(--mat-sys-on-primary);
+  background: var(--mat-sys-primary);
+}
+
+.cc-meta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: auto;
+  font-size: 0.9rem;
+  color: var(--mat-sys-on-surface-variant);
+
+  strong {
+    color: var(--mat-sys-on-surface);
+    font-weight: 700;
+  }
+
+  svg {
+    color: var(--mat-sys-primary);
+  }
+}

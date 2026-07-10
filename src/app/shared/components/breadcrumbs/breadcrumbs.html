@@ -1,0 +1,14 @@
+<nav class="lp-crumbs" aria-label="Brotkrumen">
+  @for (item of items(); track $index; let last = $last) {
+    @if (item.link && !last) {
+      <a [routerLink]="item.link">{{ item.label }}</a>
+    } @else {
+      <span class="current" [attr.aria-current]="last ? 'page' : null">
+        {{ item.label }}
+      </span>
+    }
+    @if (!last) {
+      <span class="sep" aria-hidden="true">/</span>
+    }
+  }
+</nav>

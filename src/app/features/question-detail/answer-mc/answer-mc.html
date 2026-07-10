@@ -1,14 +1,11 @@
-<div class="options">
+<div class="opt-group">
   @for (a of question().answers; track a.id) {
-    <mat-checkbox
+    <mat-checkbox class="opt"
       [checked]="selectedIds().includes(a.id)"
-      [class.correct-answer]="checked() && a.isCorrect"
-      [class.wrong-answer]="checked() && !a.isCorrect && selectedIds()
-      .includes(a.id)"
+      [class.opt--correct]="checked() && a.isCorrect"
+      [class.opt--wrong]="checked() && !a.isCorrect && selectedIds().includes(a.id)"
       (change)="toggle.emit({ id: a.id, isChecked: $event.checked })">
       {{ a.answerText }}
     </mat-checkbox>
   }
 </div>
-
-
