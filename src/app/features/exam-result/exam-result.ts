@@ -2,9 +2,10 @@ import { Component, computed, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { ExamSessionState } from '../../shared/services/exam-session-state';
-import { AnswerCheckService } from '../../shared/services/answer-check';
+import { AnswerCheckService, AnswerInput, CheckResult } from '../../shared/services/answer-check';
 import { ModeState } from '../../shared/services/mode-state';
-import { AnswerInput } from '../../shared/services/answer-check';
+import { Question } from '../../shared/models/question';
+import { Answer } from '../../shared/models/answer';
 
 @Component({
   selector: 'app-exam-result',
@@ -31,19 +32,34 @@ export class ExamResult {
     })
   );
 
-  protected correctCount = computed(() =>
-    this.results().filter(r => r.result.isCorrect).length
-  );
-
   protected wrongResults = computed(() =>
     this.results().filter(r => !r.result.isCorrect)
+  );
+
+  protected correctResults = computed(() =>
+  this.results().filter(r => r.result.isCorrect)
   );
 
   protected isUnanswered(input: AnswerInput): boolean {
     return input.selectedId === null
     && input.selectedIds.length === 0
     && input.userInput.trim() === '';
-   }
+  }
+
+  protected correctAnswersOf(q: Question): Answer[] {
+    return this.#check.correctAnswers(q);
+  }
+
+  protected getUserSelection(q: Question, result: CheckResult, input: AnswerInput): string[] {
+    if (q.type === 'fi') {
+      return input.userInput.trim() ? [input.userInput.trim()] : [];
+    }
+    return [...result.matched, ...result.extra].map(a => a.answerText);
+  }
+
+  protected correctCount = computed(() =>
+    this.results().filter(r => r.result.isCorrect).length
+  );
 
   protected percentage = computed(() => {
     const total = this.total();

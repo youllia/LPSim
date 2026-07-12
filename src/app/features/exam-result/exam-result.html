@@ -32,36 +32,82 @@
       <article class="wrong-card">
         <p class="wq">{{ r.question.questionText }}</p>
 
+        <!-- Richtige Antwort(en) — matched + missing -->
         <div class="wa-block">
           <span class="wa-label wa-label--correct">Richtige Antwort(en)</span>
           <ul class="wa-list wa-list--correct">
+            @for (a of r.result.matched; track a.id) {
+              <li>{{ a.answerText }} <em class="opt-tag">korrekt</em></li>
+            }
             @for (a of r.result.missing; track a.id) {
-              <li>{{ a.answerText }}</li>
+              <li>{{ a.answerText }} <em class="opt-tag miss">verpasst</em></li>
             }
           </ul>
         </div>
 
+        <!-- Deine Auswahl — matched + extra + FI-input -->
         @if (isUnanswered(r.input)) {
           <div class="wa-block">
             <span class="wa-label wa-label--wrong">Deine Auswahl</span>
             <ul class="wa-list wa-list--wrong">
-              <li>⚠ Nicht beantwortet — als falsch gewertet</li>
+              <li>⚠️ Nicht beantwortet — als falsch gewertet</li>
             </ul>
           </div>
-        } @else if (r.result.extra.length > 0) {
+        } @else {
           <div class="wa-block">
             <span class="wa-label wa-label--wrong">Deine Auswahl</span>
-            <ul class="wa-list wa-list--wrong">
-              @for (a of r.result.extra; track a.id) {
-                <li>{{ a.answerText }}</li>
-              }
-            </ul>
+
+            @if (r.result.matched.length > 0) {
+              <ul class="wa-list wa-list--correct">
+                @for (a of r.result.matched; track a.id) {
+                  <li>{{ a.answerText }} <em class="opt-tag">korrekt</em></li>
+                }
+              </ul>
+            }
+
+            @if (r.result.extra.length > 0) {
+              <ul class="wa-list wa-list--wrong">
+                @for (a of r.result.extra; track a.id) {
+                  <li>{{ a.answerText }} <em class="opt-tag miss">falsch</em></li>
+                }
+              </ul>
+            }
+
+            @if (r.question.type === 'fi' && r.input.userInput.trim().length > 0) {
+              <ul class="wa-list wa-list--wrong">
+                <li>{{ r.input.userInput.trim() }} <em class="opt-tag miss">falsch</em></li>
+              </ul>
+            }
           </div>
         }
       </article>
     }
   </div>
-} @else {
+}
+
+@if (correctResults().length > 0) {
+  <div class="lp-section-head">
+    <h2>Richtig beantwortete Fragen</h2>
+    <span class="count">{{ correctResults().length }} von {{ total() }}</span>
+  </div>
+
+  <div class="correct-list">
+    @for (r of correctResults(); track r.question.id) {
+      <article class="correct-card">
+        <p class="wq">{{ r.question.questionText }}</p>
+
+        <div class="wa-block">
+          <span class="wa-label wa-label--correct">Deine Antwort</span>
+          <ul class="wa-list wa-list--correct">
+            @for (text of getUserSelection(r.question, r.result, r.input); track $index) {
+              <li>{{ text }} <em class="opt-tag">korrekt</em></li>
+            }
+          </ul>
+        </div>
+      </article>
+    }
+  </div>
+} @else if (wrongResults().length === 0) {
   <div class="lp-state perfect">
     <span class="lp-state-icon">
       <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor"
@@ -70,6 +116,6 @@
       </svg>
     </span>
     <h3>Alle Fragen richtig beantwortet</h3>
-    <p>Perfekter Durchlauf. Bereit für die echte Prüfung.</p>
+    <p>Perfekter Durchgang. Bereit für die echte Prüfung.</p>
   </div>
 }
