@@ -10,16 +10,16 @@ import { ExamResult } from './features/exam-result/exam-result';
 import { ExamConfig } from './features/exam-config/exam-config';
 
 export const routes: Routes = [
-  { path: '', component: TopicSelect },
-  { path: 'anleitung', component: Anleitung },
-  { path: 'topics',  redirectTo: '', pathMatch: 'full' },
-  { path: 'topics/:topicId/catalogs', component: CatalogSelect },
-  { path: 'catalogs/:catalogId/questions', component: QuestionSelect },
-  { path: 'catalogs/:catalogId/questions/:questionId', component: QuestionDetail },
+  { path: '', component: TopicSelect, title: 'LPSim — Themenauswahl' },
+  { path: 'anleitung', component: Anleitung, title: 'LPSim — Anleitung' },
+  { path: 'topics',  redirectTo: '', pathMatch: 'full', title: 'LPSim — Themenauswahl' },
+  { path: 'topics/:topicId/catalogs', component: CatalogSelect, title: 'LPSim — Katalogauswahl' },
+  { path: 'catalogs/:catalogId/questions', component: QuestionSelect, title: 'LPSim — Fragenliste' },
+  { path: 'catalogs/:catalogId/questions/:questionId', component: QuestionDetail, title: 'LPSim — Lernen' },
   { path: 'mode', component: ModeSelect },
   { path: 'exam/config', component: ExamConfig, title: 'LPSim — Prüfung Einstellungen' },
   { path: 'exam/question/:questionId', component: QuestionDetail, title: 'LPSim — Prüfung' },
   { path: 'exam/result', component: ExamResult, title: 'LPSim — Ergebnis' },
-  { path: '**', component: NotFound}
+  { path: '**', component: NotFound, title: 'LPSim — Die Seite existirt nicht' }
   ];
 

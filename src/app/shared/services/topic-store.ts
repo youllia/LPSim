@@ -23,10 +23,6 @@ export class TopicStore {
 }
 
 
-
-
-
-0
 /* Variant with HttpClient and Observable for fetching topics
 import { Injectable, Service, inject, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
